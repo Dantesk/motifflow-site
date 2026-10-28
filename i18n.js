@@ -11,6 +11,7 @@ window.MF_I18N = {
     "nav.features": "Funzioni",
     "nav.pricing": "Prezzo",
     "nav.faq": "FAQ",
+    "nav.guide": "Guida",
     "nav.buy": "Acquista a 59 €",
 
     "hero.t1": "Un loop.",
@@ -146,6 +147,7 @@ window.MF_I18N = {
     "faq.a9": "Tutto, per 14 giorni. I file MIDI e WAV che esporti durante la prova restano tuoi.",
 
     "final.title": "Il tuo prossimo loop è già lì dentro.",
+    "foot.guide": "Guida all'uso",
     "foot.privacy": "Privacy",
     "foot.terms": "Termini",
     "foot.refund": "Rimborsi",

@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#0b0f0d">
+<title>MotifFlow Guide — from loop to variations</title>
+<meta name="description" content="How to use MotifFlow: bring a MIDI or audio loop, get better audio-to-MIDI results, shape the four variations, and drop them into Ableton, FL Studio, Logic, Reaper or Bitwig.">
+<link rel="canonical" href="https://dantesk.github.io/motifflow-site/guide.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MotifFlow">
+<meta property="og:url" content="https://dantesk.github.io/motifflow-site/guide.html">
+<meta property="og:title" content="MotifFlow Guide">
+<meta property="og:description" content="Step by step: from one loop to four variations in your DAW, plus tips for clean audio-to-MIDI.">
+<meta property="og:image" content="https://dantesk.github.io/motifflow-site/assets/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/motifflow_icon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/space-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="guide-page">
+<a class="skip" href="#content"><span class="l-en">Skip to content</span><span class="l-it" lang="it">Vai al contenuto</span></a>
+
+<header class="nav scrolled">
+  <a class="brand" href="index.html"><img src="assets/motifflow_icon_256.png" alt="" width="32" height="32"><span>MotifFlow</span></a>
+  <div class="nav-end">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="it" aria-pressed="false">IT</button>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="index.html"><span class="l-en">Back to site</span><span class="l-it" lang="it">Torna al sito</span></a>
+  </div>
+</header>
+
+<div class="guide">
+  <nav class="guide-toc" aria-label="Guide">
+    <p class="toc-title"><span class="l-en">Guide</span><span class="l-it" lang="it">Guida</span></p>
+    <ol>
+      <li><a href="#start"><span class="l-en">Quick start</span><span class="l-it" lang="it">Partenza rapida</span></a></li>
+      <li><a href="#loop"><span class="l-en">Bring a loop</span><span class="l-it" lang="it">Portare un loop</span></a></li>
+      <li><a href="#audio"><span class="l-en">Better audio to MIDI</span><span class="l-it" lang="it">Audio in MIDI migliore</span></a></li>
+      <li><a href="#variations"><span class="l-en">Shape the variations</span><span class="l-it" lang="it">Modellare le variazioni</span></a></li>
+      <li><a href="#keep"><span class="l-en">Keep what you like</span><span class="l-it" lang="it">Tenere ciò che ti piace</span></a></li>
+      <li><a href="#looptools"><span class="l-en">Extend, transpose, vary a part</span><span class="l-it" lang="it">Estendere, trasporre, variare una parte</span></a></li>
+      <li><a href="#chords"><span class="l-en">Chords and presets</span><span class="l-it" lang="it">Accordi e preset</span></a></li>
+      <li><a href="#daw"><span class="l-en">Into your DAW</span><span class="l-it" lang="it">Nella tua DAW</span></a></li>
+      <li><a href="#sounds"><span class="l-en">Play with your own sounds</span><span class="l-it" lang="it">Suonare con i tuoi suoni</span></a></li>
+      <li><a href="#style"><span class="l-en">Learn my style</span><span class="l-it" lang="it">Impara il mio stile</span></a></li>
+      <li><a href="#shortcuts"><span class="l-en">Shortcuts</span><span class="l-it" lang="it">Scorciatoie</span></a></li>
+      <li><a href="#trouble"><span class="l-en">Troubleshooting</span><span class="l-it" lang="it">Problemi e soluzioni</span></a></li>
+    </ol>
+  </nav>
+
+  <main id="content" class="guide-body">
+
+    <header class="guide-head">
+      <p class="eyebrow"><span class="l-en">MotifFlow guide · version 0.9</span><span class="l-it" lang="it">Guida di MotifFlow · versione 0.9</span></p>
+      <h1><span class="l-en">From one loop to four ideas</span><span class="l-it" lang="it">Da un loop a quattro idee</span></h1>
+      <p class="lead l-en">Everything you need to go from a MIDI or audio loop to variations playing in your DAW. Ten minutes to read, a few seconds to use.</p>
+      <p class="lead l-it" lang="it">Tutto quello che serve per passare da un loop MIDI o audio a variazioni che suonano nella tua DAW. Dieci minuti di lettura, pochi secondi di utilizzo.</p>
+      <figure class="shot">
+        <img class="l-en" src="assets/guide/app-overview-en.webp" width="1280" height="820" alt="The MotifFlow window: the sample strip on top, the Original and four variation lanes in the middle, knobs on the right." loading="eager">
+        <img class="l-it" src="assets/guide/app-overview-it.webp" width="1280" height="820" alt="La finestra di MotifFlow: la striscia del sample in alto, l'Originale e le quattro corsie delle variazioni al centro, le manopole a destra." loading="eager" lang="it">
+        <figcaption class="l-en">Left: the loop and the preview sound. Middle: the Original and the four variations. Right: genre, knobs and GENERATE.</figcaption>
+        <figcaption class="l-it" lang="it">A sinistra: il loop e il suono di anteprima. Al centro: l'Originale e le quattro variazioni. A destra: genere, manopole e GENERA.</figcaption>
+      </figure>
+    </header>
+
+    <!-- 1 -->
+    <section id="start" class="g-sec">
+      <h2><span class="num">01</span><span class="l-en">Quick start</span><span class="l-it" lang="it">Partenza rapida</span></h2>
+      <div class="l-en">
+        <ol class="steps-list">
+          <li><b>Load MotifFlow as an instrument</b> on a MIDI track (it is a VST3 / AU instrument, not a MIDI effect), or open the standalone app.</li>
+          <li><b>Bring a loop:</b> drop a <code>.mid</code> or an audio loop on the window, or use <b>IMPORT ▾</b>. No loop at hand? <b>IMPORT ▾ → New idea from scratch / examples</b>.</li>
+          <li><b>Pick the genre</b> (Trap, Drill, Boom Bap, R&amp;B or My Style). Key and tempo are detected for you.</li>
+          <li><b>Listen:</b> click a lane and press <kbd>Space</kbd>. Safe, Bounce, Evolution and Wild go from close to bold.</li>
+          <li><b>Press GENERATE</b> (or <kbd>G</kbd>) for new ideas. Lock what you like first: locked lanes are never overwritten.</li>
+          <li><b>Drag the lane's handle</b> onto a track in your DAW: MIDI notes or rendered WAV audio, your choice.</li>
+        </ol>
+      </div>
+      <div class="l-it" lang="it">
+        <ol class="steps-list">
+          <li><b>Carica MotifFlow come strumento</b> su una traccia MIDI (è uno strumento VST3 / AU, non un effetto MIDI), oppure apri l'app standalone.</li>
+          <li><b>Porta un loop:</b> trascina un <code>.mid</code> o un loop audio sulla finestra, oppure usa <b>IMPORTA ▾</b>. Nessun loop a portata di mano? <b>IMPORTA ▾ → Nuova idea da zero / esempi</b>.</li>
+          <li><b>Scegli il genere</b> (Trap, Drill, Boom Bap, R&amp;B o My Style). Tonalità e tempo vengono rilevati da soli.</li>
+          <li><b>Ascolta:</b> clicca una corsia e premi <kbd>Spazio</kbd>. Safe, Bounce, Evolution e Wild vanno dalla più vicina alla più audace.</li>
+          <li><b>Premi GENERA</b> (o <kbd>G</kbd>) per nuove idee. Prima blocca quello che ti piace: le corsie bloccate non vengono mai sovrascritte.</li>
+          <li><b>Trascina la maniglia della corsia</b> su una traccia della DAW: note MIDI o audio WAV renderizzato, a scelta.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="loop" class="g-sec cards-2">
+      <h2><span class="num">02</span><span class="l-en">Bring a loop</span><span class="l-it" lang="it">Portare un loop</span></h2>
+      <div class="l-en">
+        <div class="cards">
+          <div class="card"><h3>MIDI file</h3><p>Drop a <code>.mid</code> or use <b>IMPORT ▾ → MIDI file</b>. Multi-track files are merged (melody, chords, bass); drums on channel 10 are ignored.</p></div>
+          <div class="card"><h3>Audio loop</h3><p>WAV, MP3, AIFF, FLAC or OGG. Press <b>AUDIO TO MIDI</b> to turn it into notes (see the next chapter). <b>Play as Original</b> lets you hear the sample in place of the Original lane.</p></div>
+          <div class="card"><h3>CAPTURE</h3><p>Press <b>CAPTURE</b>, play the clip on the same DAW track (or play a MIDI keyboard in the standalone), then <b>STOP CAPTURE</b>. The take becomes the Original, aligned to the bar.</p></div>
+          <div class="card"><h3>From scratch</h3><p><b>IMPORT ▾ → New idea from scratch</b>: a starting loop (chords, 808, melody) in the panel's genre, key and tempo, in a Dark, Emotional or Uplifting mood. Or try one of the examples.</p></div>
+        </div>
+        <p class="note">Loops can be from 1 to 32 bars. A longer file uses its first 32 bars and the status line says so. Key and scale are detected automatically: you can force them with the two menus at the top right.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <div class="cards">
+          <div class="card"><h3>File MIDI</h3><p>Trascina un <code>.mid</code> oppure <b>IMPORTA ▾ → File MIDI</b>. I file con più tracce vengono uniti (melodia, accordi, basso); la batteria sul canale 10 viene ignorata.</p></div>
+          <div class="card"><h3>Loop audio</h3><p>WAV, MP3, AIFF, FLAC o OGG. Premi <b>AUDIO IN MIDI</b> per trasformarlo in note (vedi il capitolo successivo). <b>Suona l'audio</b> ti fa sentire il campione al posto della corsia Originale.</p></div>
+          <div class="card"><h3>CATTURA</h3><p>Premi <b>CATTURA</b>, fai suonare la clip sulla stessa traccia della DAW (o suona una tastiera MIDI nello standalone), poi ferma la cattura. La ripresa diventa l'Originale, allineata alla battuta.</p></div>
+          <div class="card"><h3>Da zero</h3><p><b>IMPORTA ▾ → Nuova idea da zero</b>: un loop di partenza (accordi, 808, melodia) nel genere, tonalità e tempo del pannello, con atmosfera Cupa, Emozionale o Luminosa. Oppure prova uno degli esempi.</p></div>
+        </div>
+        <p class="note">I loop possono durare da 1 a 32 battute. Un file più lungo usa le prime 32 battute e la riga di stato lo segnala. Tonalità e scala vengono rilevate in automatico: puoi forzarle con i due menu in alto a destra.</p>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="audio" class="g-sec">
+      <h2><span class="num">03</span><span class="l-en">Better audio to MIDI</span><span class="l-it" lang="it">Audio in MIDI migliore</span></h2>
+      <div class="l-en">
+        <p>MotifFlow listens to the sample with a neural network (Basic Pitch) running on your computer: nothing is uploaded. The result depends mostly on what you feed it.</p>
+        <h3>Prepare the file</h3>
+        <ul class="ticks">
+          <li><b>Use the melodic part alone</b> when you can: the piano, keys or pluck stem, not the full beat. Drums are removed automatically, but a clean stem always wins.</li>
+          <li><b>Cut it exactly to the loop:</b> start on the downbeat, end on a bar line, 2 to 8 bars. Silence or a count-in at the start shifts everything.</li>
+          <li><b>Put the tempo in the file name</b>, for example <code>dark_piano_142bpm.wav</code>: MotifFlow uses it instead of guessing. Inside a DAW the project tempo also helps.</li>
+          <li><b>Prefer WAV to MP3</b>, and the dry sound to one drowned in reverb, delay, distortion or sidechain pumping.</li>
+          <li><b>Easy:</b> piano, electric piano, guitar, plucks, strings. <b>Hard:</b> very slow pads, bells with long tails, full mixes with vocals.</li>
+        </ul>
+        <h3>Fix the notes with ADJUST NOTES</h3>
+        <p>After the analysis the <b>ADJUST NOTES FROM AUDIO</b> panel opens. The sliders change the notes in real time, without listening again. Turn on <b>Play as Original</b> and compare the sample with the notes while you move them.</p>
+        <div class="table-wrap">
+          <table class="g-table">
+            <thead><tr><th>What you hear or see</th><th>What to move</th></tr></thead>
+            <tbody>
+              <tr><td>Long notes chopped into many short ones</td><td><b>Split-Merge</b> to the right (merges)</td></tr>
+              <tr><td>Repeated notes stuck together into one</td><td><b>Split-Merge</b> to the left (splits)</td></tr>
+              <tr><td>Soft notes missing</td><td><b>More-Fewer</b> to the left</td></tr>
+              <tr><td>Extra notes that are not in the sample</td><td><b>More-Fewer</b> to the right, then <b>Min len</b> up a little</td></tr>
+              <tr><td>808 or bass mixed into the melody</td><td><b>Lowest</b> up (above the bass register)</td></tr>
+              <tr><td>Notes an octave or a twelfth above the real ones</td><td><b>Clean overtones</b> on</td></tr>
+              <tr><td>Hi-hats or claps turned into notes</td><td><b>Remove drums</b> on (analyses again, about 2 s)</td></tr>
+              <tr><td>Notes slightly off the grid</td><td><b>Snap to 1/16</b> on</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><b>RESET</b> goes back to the defaults, <b>DONE</b> closes the panel, <b>ADJUST NOTES</b> opens it again. Your settings are kept for the next sample.</p>
+        <h3>Finish by hand</h3>
+        <p>Open the Original with <b>EDIT</b>: double-click to add or delete a note, drag to move it, use the arrows to transpose. Two minutes of cleaning on the Original give much better variations, because every lane is built from it.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p>MotifFlow ascolta il campione con una rete neurale (Basic Pitch) che gira sul tuo computer: non viene caricato nulla online. Il risultato dipende soprattutto da cosa gli dai.</p>
+        <h3>Prepara il file</h3>
+        <ul class="ticks">
+          <li><b>Usa solo la parte melodica</b> quando puoi: lo stem di piano, keys o pluck, non il beat completo. La batteria viene tolta in automatico, ma uno stem pulito vince sempre.</li>
+          <li><b>Taglialo esattamente sul loop:</b> inizio sul primo tempo, fine su una stanghetta, da 2 a 8 battute. Silenzio o un count-in all'inizio spostano tutto.</li>
+          <li><b>Metti il tempo nel nome del file</b>, per esempio <code>dark_piano_142bpm.wav</code>: MotifFlow usa quello invece di stimarlo. Dentro una DAW aiuta anche il tempo del progetto.</li>
+          <li><b>Meglio WAV che MP3</b>, e il suono asciutto piuttosto che affogato in riverbero, delay, distorsione o sidechain.</li>
+          <li><b>Facili:</b> piano, piano elettrico, chitarra, pluck, archi. <b>Difficili:</b> pad molto lenti, campane con code lunghe, mix completi con la voce.</li>
+        </ul>
+        <h3>Correggi le note con REGOLA NOTE</h3>
+        <p>Dopo l'analisi si apre il pannello <b>REGOLA LE NOTE DALL'AUDIO</b>. Gli slider cambiano le note in tempo reale, senza riascoltare. Attiva <b>Suona l'audio</b> e confronta il campione con le note mentre le muovi.</p>
+        <div class="table-wrap">
+          <table class="g-table">
+            <thead><tr><th>Cosa senti o vedi</th><th>Cosa muovere</th></tr></thead>
+            <tbody>
+              <tr><td>Note lunghe spezzate in tante note corte</td><td><b>Dividi-Unisci</b> verso destra (unisce)</td></tr>
+              <tr><td>Note ripetute incollate in una sola</td><td><b>Dividi-Unisci</b> verso sinistra (divide)</td></tr>
+              <tr><td>Mancano le note deboli</td><td><b>Più-Meno</b> verso sinistra</td></tr>
+              <tr><td>Note in più che nel campione non ci sono</td><td><b>Più-Meno</b> verso destra, poi <b>Durata min</b> un po' più alta</td></tr>
+              <tr><td>808 o basso finiti nella melodia</td><td><b>Più bassa</b> più in alto (sopra il registro del basso)</td></tr>
+              <tr><td>Note un'ottava o una dodicesima sopra quelle vere</td><td><b>Pulisci armonici</b> attivo</td></tr>
+              <tr><td>Hi-hat o clap trasformati in note</td><td><b>Togli batteria</b> attivo (rianalizza, circa 2 s)</td></tr>
+              <tr><td>Note leggermente fuori griglia</td><td><b>Griglia 1/16</b> attiva</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><b>RESET</b> torna ai valori predefiniti, <b>FATTO</b> chiude il pannello, <b>REGOLA NOTE</b> lo riapre. Le impostazioni restano per il campione successivo.</p>
+        <h3>Rifinisci a mano</h3>
+        <p>Apri l'Originale con <b>MODIFICA</b>: doppio clic per aggiungere o eliminare una nota, trascina per spostarla, frecce per trasporla. Due minuti di pulizia sull'Originale danno variazioni molto migliori, perché ogni corsia nasce da lì.</p>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="variations" class="g-sec">
+      <h2><span class="num">04</span><span class="l-en">Shape the variations</span><span class="l-it" lang="it">Modellare le variazioni</span></h2>
+      <div class="l-en">
+        <div class="lanes-mini">
+          <div class="lm lm-safe"><b>Safe</b> small note changes, always usable</div>
+          <div class="lm lm-bounce"><b>Bounce</b> new rhythm, re-hits and accents</div>
+          <div class="lm lm-evo"><b>Evolution</b> the phrase develops bar after bar</div>
+          <div class="lm lm-wild"><b>Wild</b> bold ideas, still in key</div>
+        </div>
+        <dl class="defs">
+          <dt>Genre</dt><dd>Changes the rhythmic vocabulary: Trap half-time bounce, Drill syncopated 16ths and slides, Boom Bap swing, R&amp;B laid-back feel with richer chords. <b>Groove</b> sets how strongly it is applied.</dd>
+          <dt>Identity</dt><dd>How close the variations stay to your loop. High = recognisable, low = new ideas.</dd>
+          <dt>Density</dt><dd>Fewer or more notes than the Original.</dd>
+          <dt>Tension</dt><dd>Harmonic colour: 0 is pure and consonant, higher adds 7ths, 9ths and substituted chords, never wrong notes.</dd>
+          <dt>Humanize</dt><dd>Small timing and velocity differences so the MIDI sounds played. At 0 the exported MIDI is perfectly on the grid.</dd>
+          <dt>Oct down / Oct up</dt><dd>How far the melody may move by octaves.</dd>
+          <dt>VARY</dt><dd>Which parts may change: turn off CHORDS and BASS to vary only the melody over the same chords, or turn off MELODY to re-harmonise under the same melody.</dd>
+          <dt>Lock to scale</dt><dd>Every changed note is forced into the key.</dd>
+        </dl>
+        <p class="note">Knob changes regenerate the unlocked lanes in the background: the window never freezes, GENERATE shows GENERATING… while it works.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <div class="lanes-mini">
+          <div class="lm lm-safe"><b>Safe</b> piccole modifiche alle note, sempre usabile</div>
+          <div class="lm lm-bounce"><b>Bounce</b> ritmo nuovo, re-hit e accenti</div>
+          <div class="lm lm-evo"><b>Evolution</b> la frase si sviluppa battuta dopo battuta</div>
+          <div class="lm lm-wild"><b>Wild</b> idee audaci, sempre in tonalità</div>
+        </div>
+        <dl class="defs">
+          <dt>Genere</dt><dd>Cambia il vocabolario ritmico: bounce half-time della Trap, 16esimi sincopati e glide della Drill, swing del Boom Bap, feel rilassato e accordi più ricchi dell'R&amp;B. <b>Groove</b> decide quanto applicarlo.</dd>
+          <dt>Identità</dt><dd>Quanto le variazioni restano vicine al tuo loop. Alta = riconoscibile, bassa = idee nuove.</dd>
+          <dt>Densità</dt><dd>Meno o più note rispetto all'Originale.</dd>
+          <dt>Tensione</dt><dd>Colore armonico: a 0 è puro e consonante, più alta aggiunge settime, none e accordi sostituiti, mai note sbagliate.</dd>
+          <dt>Umanizza</dt><dd>Piccole differenze di tempo e velocity perché il MIDI sembri suonato. A 0 il MIDI esportato è perfettamente in griglia.</dd>
+          <dt>Oct down / Oct up</dt><dd>Di quante ottave può spostarsi la melodia.</dd>
+          <dt>VARIA</dt><dd>Quali parti possono cambiare: spegni ACCORDI e BASSO per variare solo la melodia sugli stessi accordi, oppure spegni MELODIA per riarmonizzare sotto la stessa melodia.</dd>
+          <dt>Blocca sulla scala</dt><dd>Ogni nota cambiata viene portata in tonalità.</dd>
+        </dl>
+        <p class="note">Le manopole rigenerano le corsie non bloccate in background: la finestra non si blocca mai, GENERA mostra GENERAZIONE… mentre lavora.</p>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="keep" class="g-sec">
+      <h2><span class="num">05</span><span class="l-en">Keep what you like</span><span class="l-it" lang="it">Tenere ciò che ti piace</span></h2>
+      <div class="l-en">
+        <ul class="ticks">
+          <li><b>Lock a lane</b> (LOCK): GENERATE and the knobs leave it alone. A lane you edit by hand is locked automatically.</li>
+          <li><b>Lock a bar:</b> click the bar strip above the notes. That bar stays identical when the lane changes.</li>
+          <li><b>Lock notes:</b> select them and press <kbd>L</kbd> (white outline). They survive every new idea.</li>
+          <li><b>Star a version</b> next to the lane name to keep it in your favourites, saved with the project and available even after loading another loop.</li>
+          <li><b>VERSIONS</b> lists the earlier ideas of a lane: every GENERATE keeps the one it replaces (knob moves do not fill the list).</li>
+          <li><b>A/B</b> (or <kbd>A</kbd>) while playing: hear the Original at the same point of the loop, press again to go back.</li>
+          <li><b>UNDO / REDO</b> (<kbd>Cmd/Ctrl+Z</kbd>, <kbd>Cmd/Ctrl+Shift+Z</kbd>) cover note edits, NEW, GENERATE, extend, transpose and restored versions.</li>
+        </ul>
+      </div>
+      <div class="l-it" lang="it">
+        <ul class="ticks">
+          <li><b>Blocca una corsia</b> (BLOCCA): GENERA e le manopole non la toccano. Una corsia modificata a mano si blocca da sola.</li>
+          <li><b>Blocca una battuta:</b> clicca la striscia delle battute sopra le note. Quella battuta resta identica quando la corsia cambia.</li>
+          <li><b>Blocca delle note:</b> selezionale e premi <kbd>L</kbd> (contorno bianco). Sopravvivono a ogni nuova idea.</li>
+          <li><b>Metti la stella</b> accanto al nome della corsia per tenere la versione nei preferiti, salvati con il progetto e disponibili anche dopo aver caricato un altro loop.</li>
+          <li><b>VERSIONI</b> elenca le idee precedenti di una corsia: ogni GENERA conserva quella che sostituisce (i movimenti delle manopole non riempiono la lista).</li>
+          <li><b>A/B</b> (o <kbd>A</kbd>) durante il play: senti l'Originale nello stesso punto del loop, premi di nuovo per tornare.</li>
+          <li><b>ANNULLA / RIPETI</b> (<kbd>Cmd/Ctrl+Z</kbd>, <kbd>Cmd/Ctrl+Shift+Z</kbd>) valgono per modifiche alle note, NUOVA, GENERA, estendi, trasponi e versioni ripristinate.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="looptools" class="g-sec">
+      <h2><span class="num">06</span><span class="l-en">Extend, transpose, vary a part</span><span class="l-it" lang="it">Estendere, trasporre, variare una parte</span></h2>
+      <div class="l-en">
+        <div class="cards">
+          <div class="card"><h3>LOOP ▾ → Extend</h3><p>4 bars become 8 (or 8 → 16, 16 → 32). The Original repeats; each variation keeps its first half and continues with a new second half: perfect for a hook with an answer.</p></div>
+          <div class="card"><h3>LOOP ▾ → Transpose</h3><p>Up or down by up to an octave. The Original, every variation and their earlier versions move together, and a key chosen by hand follows. A loaded audio sample is not transposed.</p></div>
+          <div class="card"><h3>Vary only a part</h3><p>Right-click a lane → <b>New idea for part of the loop</b>: first half, second half, a pair of bars, or only the last bar for a new ending. Everything else stays identical.</p></div>
+        </div>
+      </div>
+      <div class="l-it" lang="it">
+        <div class="cards">
+          <div class="card"><h3>LOOP ▾ → Estendi</h3><p>4 battute diventano 8 (oppure 8 → 16, 16 → 32). L'Originale si ripete; ogni variazione tiene la prima metà e prosegue con una seconda metà nuova: perfetto per una frase con risposta.</p></div>
+          <div class="card"><h3>LOOP ▾ → Trasponi</h3><p>Su o giù fino a un'ottava. L'Originale, tutte le variazioni e le loro versioni precedenti si spostano insieme, e una tonalità scelta a mano le segue. Un campione audio caricato non viene trasposto.</p></div>
+          <div class="card"><h3>Variare solo una parte</h3><p>Tasto destro su una corsia → <b>Nuova idea per una parte del loop</b>: prima metà, seconda metà, una coppia di battute oppure solo l'ultima battuta per un nuovo finale. Tutto il resto resta identico.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="chords" class="g-sec">
+      <h2><span class="num">07</span><span class="l-en">Chords and presets</span><span class="l-it" lang="it">Accordi e preset</span></h2>
+      <div class="l-en">
+        <p>The chord names of every lane are shown above the notes. Under <b>Chords of the variations</b> (left panel) you change how the variations play their chords, without touching the Original:</p>
+        <ul class="ticks">
+          <li><b>Voicing:</b> as generated, close, drop 2, spread, inversion up or down.</li>
+          <li><b>Strum:</b> the chord notes start one after the other, like a guitar or a harp.</li>
+          <li><b>Arpeggio:</b> up, down, up-down or random at 1/8, 1/16, 1/16 triplets or 1/32.</li>
+        </ul>
+        <p>All of this goes into the MIDI you drag and export. <b>Presets</b> set genre, knobs, preview sound and chord style in one click; once you move a knob the menu shows <i>(modified)</i>.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p>I nomi degli accordi di ogni corsia compaiono sopra le note. In <b>Accordi delle variazioni</b> (pannello sinistro) cambi come le variazioni suonano gli accordi, senza toccare l'Originale:</p>
+        <ul class="ticks">
+          <li><b>Voicing:</b> come generati, stretti, drop 2, larghi, rivolto su o giù.</li>
+          <li><b>Strum:</b> le note dell'accordo partono una dopo l'altra, come una chitarra o un'arpa.</li>
+          <li><b>Arpeggio:</b> su, giù, su-giù o casuale a 1/8, 1/16, terzine di 1/16 o 1/32.</li>
+        </ul>
+        <p>Tutto questo finisce nel MIDI che trascini ed esporti. I <b>Preset</b> impostano genere, manopole, suono di anteprima e stile degli accordi in un clic; appena muovi una manopola il menu mostra <i>(modificato)</i>.</p>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="daw" class="g-sec">
+      <h2><span class="num">08</span><span class="l-en">Into your DAW</span><span class="l-it" lang="it">Nella tua DAW</span></h2>
+      <div class="l-en">
+        <h3>Drag and drop</h3>
+        <p>Each lane has a <b>DRAG</b> handle with a <b>MIDI / WAV</b> chip. Click the chip to choose, then drag the handle onto a track:</p>
+        <ul class="ticks">
+          <li><b>MIDI</b>: the notes, with voicing, strum and arpeggio applied. Turn on <b>Export voices as tracks</b> to get melody, chords and bass on separate tracks.</li>
+          <li><b>WAV</b>: the lane played with the preview sound, 48 kHz / 24-bit, a seamless loop. While WAV is chosen the lanes are rendered in the background, so the drop is instant.</li>
+          <li>Hold <kbd>Alt/Option</kbd> while dragging to get the other format just once.</li>
+        </ul>
+        <h3>Export</h3>
+        <p><b>EXPORT ▾</b> saves the selected lane as MIDI, WAV or separate voices (melody, chords and bass as .mid and .wav each, ready for sample packs), or every lane into a folder. File names carry genre, style, key and tempo. Exports run in the background; the status line tells you when they are done.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <h3>Trascina e rilascia</h3>
+        <p>Ogni corsia ha una maniglia <b>TRASCINA</b> con un chip <b>MIDI / WAV</b>. Clicca il chip per scegliere, poi trascina la maniglia su una traccia:</p>
+        <ul class="ticks">
+          <li><b>MIDI</b>: le note, con voicing, strum e arpeggio applicati. Attiva <b>Esporta le voci su tracce</b> per avere melodia, accordi e basso su tracce separate.</li>
+          <li><b>WAV</b>: la corsia suonata con il suono di anteprima, 48 kHz / 24 bit, in loop senza stacchi. Finché è scelto WAV le corsie vengono renderizzate in background, così il rilascio è immediato.</li>
+          <li>Tieni premuto <kbd>Alt/Option</kbd> durante il trascinamento per avere l'altro formato una volta sola.</li>
+        </ul>
+        <h3>Esportare</h3>
+        <p><b>ESPORTA ▾</b> salva la corsia selezionata come MIDI, WAV o voci separate (melodia, accordi e basso in .mid e .wav ciascuno, pronti per i sample pack), oppure tutte le corsie in una cartella. I nomi dei file contengono genere, stile, tonalità e tempo. Gli export girano in background; la riga di stato ti dice quando hanno finito.</p>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="sounds" class="g-sec">
+      <h2><span class="num">09</span><span class="l-en">Play with your own sounds</span><span class="l-it" lang="it">Suonare con i tuoi suoni</span></h2>
+      <div class="l-en">
+        <p>MotifFlow sends the notes of the selected lane to its MIDI output while it plays, in time with the DAW. Turn on <b>MIDI out only (mute synth)</b> to hear only your instrument, and <b>Voices on MIDI ch 1/2/3</b> to send melody, chords and bass to three different instruments.</p>
+        <div class="daws">
+          <details><summary>Ableton Live</summary><ol><li>MotifFlow on a MIDI track.</li><li>A second MIDI track with your instrument.</li><li>On that track: <i>MIDI From</i> → the MotifFlow track → <b>MotifFlow</b>; <i>Monitor</i> → <b>In</b>.</li><li>With voices on channels: three tracks, each with <i>MIDI From</i> = MotifFlow and channel 1, 2 or 3.</li></ol></details>
+          <details><summary>FL Studio</summary><p>In the plugin wrapper (gear icon → <i>MIDI</i>) set an <i>Output port</i>, for example 1, and the same <i>Input port</i> on your synth's channel.</p></details>
+          <details><summary>Reaper</summary><p>On the MotifFlow track: <i>Routing</i> → <i>Add new send</i> to your synth's track, audio none, MIDI all (or one channel).</p></details>
+          <details><summary>Bitwig Studio</summary><p>Put a <i>Note Receiver</i> on your instrument's track with the MotifFlow track as source.</p></details>
+          <details><summary>Logic Pro / GarageBand</summary><p>An instrument plug-in cannot send MIDI to other tracks in Logic: use drag and drop or export.</p></details>
+          <details><summary>Standalone app</summary><p>In <i>Options → Audio/MIDI Settings</i> choose a MIDI output. On a Mac turn on the <b>IAC Driver</b> (Audio MIDI Setup) to reach any DAW; on Windows use a virtual port such as loopMIDI.</p></details>
+        </div>
+      </div>
+      <div class="l-it" lang="it">
+        <p>MotifFlow manda le note della corsia selezionata alla sua uscita MIDI mentre suona, a tempo con la DAW. Attiva <b>Solo uscita MIDI (synth muto)</b> per sentire solo il tuo strumento, e <b>Voci sui canali MIDI 1/2/3</b> per mandare melodia, accordi e basso a tre strumenti diversi.</p>
+        <div class="daws">
+          <details><summary>Ableton Live</summary><ol><li>MotifFlow su una traccia MIDI.</li><li>Una seconda traccia MIDI con il tuo strumento.</li><li>Su quella traccia: <i>MIDI From</i> → la traccia di MotifFlow → <b>MotifFlow</b>; <i>Monitor</i> → <b>In</b>.</li><li>Con le voci sui canali: tre tracce, ognuna con <i>MIDI From</i> = MotifFlow e il canale 1, 2 o 3.</li></ol></details>
+          <details><summary>FL Studio</summary><p>Nel wrapper del plugin (ingranaggio → <i>MIDI</i>) imposta una <i>Output port</i>, per esempio 1, e la stessa <i>Input port</i> sul canale del tuo synth.</p></details>
+          <details><summary>Reaper</summary><p>Sulla traccia di MotifFlow: <i>Routing</i> → <i>Add new send</i> verso la traccia del synth, audio nessuno, MIDI tutti (o un canale).</p></details>
+          <details><summary>Bitwig Studio</summary><p>Metti un <i>Note Receiver</i> sulla traccia del tuo strumento con la traccia di MotifFlow come sorgente.</p></details>
+          <details><summary>Logic Pro / GarageBand</summary><p>In Logic un plugin strumento non può mandare MIDI ad altre tracce: usa il trascinamento o l'export.</p></details>
+          <details><summary>App standalone</summary><p>In <i>Options → Audio/MIDI Settings</i> scegli un'uscita MIDI. Su Mac attiva l'<b>IAC Driver</b> (Configurazione MIDI Audio) per raggiungere qualsiasi DAW; su Windows usa una porta virtuale come loopMIDI.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="style" class="g-sec">
+      <h2><span class="num">10</span><span class="l-en">Learn my style</span><span class="l-it" lang="it">Impara il mio stile</span></h2>
+      <div class="l-en">
+        <p>Press <b>LEARN MY STYLE…</b> and choose a folder of your own MIDI loops (sub-folders too). MotifFlow measures how you play — favourite grid positions, swing, accents, chord pushes, 7ths and 9ths, melodic steps — and creates the <b>MY STYLE</b> genre. It also tells you which built-in genre is closest to your loops.</p>
+        <p>10 to 50 loops give a reliable profile. Everything stays on your computer: these are statistics on the notes, nothing is sent anywhere. The style is available in every project and saved inside the DAW project too.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p>Premi <b>IMPARA IL MIO STILE…</b> e scegli una cartella con i tuoi loop MIDI (anche sottocartelle). MotifFlow misura come suoni — posizioni preferite sulla griglia, swing, accenti, anticipi degli accordi, settime e none, passi della melodia — e crea il genere <b>MY STYLE</b>. Ti dice anche quale genere integrato somiglia di più ai tuoi loop.</p>
+        <p>Da 10 a 50 loop danno un profilo affidabile. Tutto resta sul tuo computer: sono statistiche sulle note, non viene inviato nulla. Lo stile è disponibile in ogni progetto ed è salvato anche dentro il progetto della DAW.</p>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section id="shortcuts" class="g-sec">
+      <h2><span class="num">11</span><span class="l-en">Shortcuts</span><span class="l-it" lang="it">Scorciatoie</span></h2>
+      <div class="l-en">
+        <p>The same list is in the app: <b>?</b> → Keyboard and mouse shortcuts, or press <kbd>?</kbd>. On Windows use Ctrl where it says Cmd.</p>
+        <div class="table-wrap">
+          <table class="g-table keys">
+            <tbody>
+              <tr><td><kbd>Space</kbd></td><td>Play / stop</td><td><kbd>G</kbd></td><td>Generate new ideas</td></tr>
+              <tr><td><kbd>1</kbd>–<kbd>5</kbd></td><td>Select a lane</td><td><kbd>A</kbd></td><td>A/B with the Original</td></tr>
+              <tr><td><kbd>Cmd+Z</kbd></td><td>Undo</td><td><kbd>Cmd+Shift+Z</kbd></td><td>Redo</td></tr>
+              <tr><td><kbd>Delete</kbd></td><td>Delete selected notes</td><td><kbd>L</kbd></td><td>Lock / unlock notes</td></tr>
+              <tr><td><kbd>Arrows</kbd></td><td>Move / transpose (Shift = beat / octave)</td><td><kbd>Cmd+A</kbd></td><td>Select all</td></tr>
+              <tr><td><kbd>Cmd+0</kbd></td><td>Show the whole loop</td><td><kbd>Esc</kbd></td><td>Back to all lanes</td></tr>
+              <tr><td>Double-click</td><td>New note / delete a note</td><td>Alt+drag</td><td>Free move, or the other drag format</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Interface too small or too large? The <b>100%</b> button at the bottom right scales everything to 125, 150 or 175%.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p>La stessa lista è nell'app: <b>?</b> → Scorciatoie da tastiera e mouse, oppure premi <kbd>?</kbd>. Su Windows usa Ctrl dove c'è scritto Cmd.</p>
+        <div class="table-wrap">
+          <table class="g-table keys">
+            <tbody>
+              <tr><td><kbd>Spazio</kbd></td><td>Avvia / ferma</td><td><kbd>G</kbd></td><td>Genera nuove idee</td></tr>
+              <tr><td><kbd>1</kbd>–<kbd>5</kbd></td><td>Seleziona una corsia</td><td><kbd>A</kbd></td><td>A/B con l'Originale</td></tr>
+              <tr><td><kbd>Cmd+Z</kbd></td><td>Annulla</td><td><kbd>Cmd+Shift+Z</kbd></td><td>Ripeti</td></tr>
+              <tr><td><kbd>Canc</kbd></td><td>Elimina le note selezionate</td><td><kbd>L</kbd></td><td>Blocca / sblocca le note</td></tr>
+              <tr><td><kbd>Frecce</kbd></td><td>Sposta / trasponi (Shift = movimento / ottava)</td><td><kbd>Cmd+A</kbd></td><td>Seleziona tutto</td></tr>
+              <tr><td><kbd>Cmd+0</kbd></td><td>Mostra tutto il loop</td><td><kbd>Esc</kbd></td><td>Torna a tutte le corsie</td></tr>
+              <tr><td>Doppio clic</td><td>Nuova nota / elimina una nota</td><td>Alt+trascina</td><td>Spostamento libero, o l'altro formato</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Interfaccia troppo piccola o troppo grande? Il pulsante <b>100%</b> in basso a destra la porta a 125, 150 o 175%.</p>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section id="trouble" class="g-sec">
+      <h2><span class="num">12</span><span class="l-en">Troubleshooting</span><span class="l-it" lang="it">Problemi e soluzioni</span></h2>
+      <div class="l-en">
+        <div class="daws">
+          <details><summary>My DAW does not show MotifFlow</summary><p>MotifFlow is an <b>instrument</b>: look among instruments, not MIDI effects. Rescan plug-ins (Ableton: <i>Settings → Plug-ins</i>, VST3 system folders on). Plug-in folders: Mac <code>~/Library/Audio/Plug-Ins/VST3</code> and <code>Components</code>; Windows <code>C:\Program Files\Common Files\VST3</code>.</p></details>
+          <details><summary>I hear nothing</summary><p>Check that <b>MIDI out only</b> is off, that the SYNTH knob is up, and that the track is armed or monitored if your DAW needs it. In the standalone app choose the audio output in <i>Options</i>.</p></details>
+          <details><summary>The variations sound too far from my loop</summary><p>Raise <b>Identity</b>, lower <b>Tension</b>, try <b>Safe</b> first, and switch off VARY for the parts you want untouched. If the loop came from audio, clean the Original first: wrong notes there spread to every lane.</p></details>
+          <details><summary>The tempo of an audio loop is wrong</summary><p>Put the BPM in the file name (<code>loop_90bpm.wav</code>) and trim the file exactly to whole bars, then load it again.</p></details>
+          <details><summary>MotifFlow closed unexpectedly</summary><p>The standalone app saves your session every 30 seconds and offers to restore it at the next start; inside a DAW the project saves it. Please send us the log: Mac <code>~/Library/Application Support/MotifFlow/MotifFlow.log</code>, Windows <code>%APPDATA%\MotifFlow\MotifFlow.log</code>.</p></details>
+        </div>
+        <p class="note">Still stuck? Write to support (address at the bottom of the home page) with your system, DAW, the steps to reproduce the problem and the log file.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <div class="daws">
+          <details><summary>La DAW non mostra MotifFlow</summary><p>MotifFlow è uno <b>strumento</b>: cercalo tra gli strumenti, non tra gli effetti MIDI. Fai un rescan dei plugin (Ableton: <i>Impostazioni → Plug-in</i>, cartelle di sistema VST3 attive). Cartelle dei plugin: Mac <code>~/Library/Audio/Plug-Ins/VST3</code> e <code>Components</code>; Windows <code>C:\Program Files\Common Files\VST3</code>.</p></details>
+          <details><summary>Non sento niente</summary><p>Controlla che <b>Solo uscita MIDI</b> sia spento, che la manopola SYNTH sia alzata e che la traccia sia armata o in monitor se la DAW lo richiede. Nell'app standalone scegli l'uscita audio in <i>Options</i>.</p></details>
+          <details><summary>Le variazioni sono troppo lontane dal mio loop</summary><p>Alza <b>Identità</b>, abbassa <b>Tensione</b>, prova prima <b>Safe</b> e spegni VARIA per le parti che vuoi intatte. Se il loop arriva da un audio, pulisci prima l'Originale: le note sbagliate lì finiscono in tutte le corsie.</p></details>
+          <details><summary>Il tempo di un loop audio è sbagliato</summary><p>Metti i BPM nel nome del file (<code>loop_90bpm.wav</code>) e taglia il file esattamente su battute intere, poi ricaricalo.</p></details>
+          <details><summary>MotifFlow si è chiuso all'improvviso</summary><p>L'app standalone salva la sessione ogni 30 secondi e alla riapertura propone di ripristinarla; dentro la DAW la salva il progetto. Mandaci il log: Mac <code>~/Library/Application Support/MotifFlow/MotifFlow.log</code>, Windows <code>%APPDATA%\MotifFlow\MotifFlow.log</code>.</p></details>
+        </div>
+        <p class="note">Ancora bloccato? Scrivi all'assistenza (indirizzo in fondo alla home page) con sistema, DAW, i passi per riprodurre il problema e il file di log.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer"><div class="wrap footer-inner"><div class="footer-brand"><img src="assets/motifflow_icon_256.png" alt="" width="28" height="28"><span>© 2026 Paolo Lagalante · MotifFlow. All rights reserved.</span></div>
+<nav class="footer-links" aria-label="Legal"><a href="guide.html"><span class="l-en">Guide</span><span class="l-it" lang="it">Guida</span></a><a href="privacy.html">Privacy</a><a href="terms.html"><span class="l-en">Terms</span><span class="l-it" lang="it">Termini</span></a><a href="legal.html"><span class="l-en">Legal notice</span><span class="l-it" lang="it">Note legali</span></a></nav>
+<p class="credits">Audio-to-MIDI uses Basic Pitch (Apache-2.0). Built with JUCE. Fonts: Space Grotesk, JetBrains Mono (SIL OFL). VST is a trademark of Steinberg Media Technologies GmbH.</p></div></footer>
+
+<script src="guide.js"></script>
+</body>
+</html>
