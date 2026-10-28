@@ -1,15 +1,36 @@
 /* ==========================================================================
    CONFIG — edit these before launch.
-   checkoutUrl:      Lemon Squeezy / Paddle / Stripe checkout link. While empty,
+   checkoutUrl:      Stripe Payment Link (https://buy.stripe.com/...). While empty,
                      "Buy" buttons just scroll to the pricing card (#buy).
-   trialDownloadMac: direct link to the macOS trial installer (.dmg / .pkg).
-   trialDownloadWin: direct link to the Windows trial installer (.exe / .msi).
+   trialDownloadMac: direct https link to the macOS trial installer (.pkg).
+   trialDownloadWin: direct https link to the Windows trial installer (.exe).
+   supportEmail:     shown in the footer when set.
+   Links are only used if they are https and on an allowed host (see ALLOWED_HOSTS):
+   a typo or a tampered value can never send buyers somewhere else.
    ========================================================================== */
 const CONFIG = {
-  checkoutUrl: '',       // e.g. 'https://motifflow.lemonsqueezy.com/checkout/buy/XXXX'
-  trialDownloadMac: '',  // e.g. 'https://downloads.example.com/MotifFlow-Trial.dmg'
-  trialDownloadWin: '',  // e.g. 'https://downloads.example.com/MotifFlow-Trial-Setup.exe'
+  checkoutUrl: '',       // e.g. 'https://buy.stripe.com/XXXXXXXX'
+  trialDownloadMac: '',  // e.g. 'https://github.com/Dantesk/motifflow-site/releases/download/v0.9.1/MotifFlow-0.9.1-mac.pkg'
+  trialDownloadWin: '',  // e.g. 'https://github.com/Dantesk/motifflow-site/releases/download/v0.9.1/MotifFlow-0.9.1-win.exe'
+  supportEmail: '',      // e.g. 'support@motifflow.app'
 };
+
+const ALLOWED_HOSTS = {
+  checkout: ['buy.stripe.com', 'checkout.stripe.com'],
+  download: ['github.com', 'objects.githubusercontent.com', 'dantesk.github.io'],
+};
+
+/** The URL if it is https on one of the allowed hosts, otherwise null. */
+function safeUrl(value, hosts) {
+  if (!value) return null;
+  try {
+    const u = new URL(value);
+    if (u.protocol !== 'https:') return null;
+    return hosts.some((h) => u.hostname === h || u.hostname.endsWith('.' + h)) ? u.href : null;
+  } catch (e) {
+    return null;
+  }
+}
 
 document.documentElement.classList.add('js');
 
@@ -24,7 +45,7 @@ const dict = window.MF_I18N || { it: {}, en: {} };
 const i18nEls = Array.from(document.querySelectorAll('[data-i18n]'));
 // capture the English copy straight from the HTML so it never drifts
 const en = Object.assign({}, dict.en || {});
-i18nEls.forEach((el) => { const k = el.dataset.i18n; if (!(k in en)) en[k] = el.innerHTML; });
+i18nEls.forEach((el) => { const k = el.dataset.i18n; if (!(k in en)) en[k] = el.textContent; });
 en['meta.title'] = document.title;
 let lang = 'en';
 
@@ -33,7 +54,8 @@ function t(key) { return (lang === 'it' && dict.it[key]) || en[key] || key; }
 function applyLang(next) {
   lang = next === 'it' ? 'it' : 'en';
   document.documentElement.lang = lang;
-  i18nEls.forEach((el) => { el.innerHTML = t(el.dataset.i18n); });
+  // textContent, never innerHTML: translations are plain text, so no markup can ever be injected
+  i18nEls.forEach((el) => { el.textContent = t(el.dataset.i18n); });
   document.title = t('meta.title');
   document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
   store.set('mf-lang', lang);
@@ -42,22 +64,31 @@ function applyLang(next) {
 document.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => applyLang(b.dataset.lang)));
 
 /* ---------- checkout + trial ---------- */
+const checkoutUrl = safeUrl(CONFIG.checkoutUrl, ALLOWED_HOSTS.checkout);
 document.querySelectorAll('[data-checkout]').forEach((a) => {
-  a.addEventListener('click', (e) => {
-    if (!CONFIG.checkoutUrl) return; // falls back to #buy anchor
-    e.preventDefault();
-    window.location.href = CONFIG.checkoutUrl;
-  });
+  if (!checkoutUrl) return; // falls back to the #buy anchor
+  a.href = checkoutUrl;
+  a.rel = 'noopener';
 });
 document.querySelectorAll('[data-trial]').forEach((a) => {
-  const url = a.dataset.trial === 'mac' ? CONFIG.trialDownloadMac : CONFIG.trialDownloadWin;
-  if (url) { a.href = url; return; }
+  const url = safeUrl(a.dataset.trial === 'mac' ? CONFIG.trialDownloadMac : CONFIG.trialDownloadWin, ALLOWED_HOSTS.download);
+  if (url) { a.href = url; a.rel = 'noopener'; return; }
   a.addEventListener('click', (e) => {
     e.preventDefault();
     const note = document.getElementById('trialNote');
     if (note) note.hidden = false;
   });
 });
+
+/* ---------- footer ---------- */
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+if (/^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/i.test(CONFIG.supportEmail)) {
+  const link = document.getElementById('supportLink');
+  link.textContent = CONFIG.supportEmail;
+  link.href = 'mailto:' + CONFIG.supportEmail;
+  document.getElementById('support').hidden = false;
+}
 
 /* ---------- nav state ---------- */
 const nav = document.getElementById('nav');
@@ -145,9 +176,8 @@ applyLang(store.get('mf-lang') || 'en');
     scene = createScene(canvas, { reducedMotion });
     const { act, side } = progressAt(window.scrollY + window.innerHeight / 2);
     scene.jump(act, side);
-    window.__mf = scene; // handy for debugging in the console
   } catch (err) {
-    // No WebGL (or CDN blocked): the CSS gradient on #scene remains as the backdrop.
+    // No WebGL: the CSS gradient on #scene remains as the backdrop.
     console.warn('MotifFlow scene disabled:', err && err.message);
     canvas.classList.add('no-webgl');
   }

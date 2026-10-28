@@ -1,0 +1,20 @@
+Copyright (c) 2026 Paolo Lagalante. All rights reserved.
+
+This repository contains the website of MotifFlow ("the Website"): its text, visual design,
+layout, graphics, logo and icons, video, animations and source code (HTML, CSS, JavaScript),
+except for the third-party components listed below.
+
+No licence is granted. The repository is publicly visible only so that the Website can be served
+by GitHub Pages. Viewing the files on GitHub, and the copy GitHub's Terms of Service allow
+("forking" within GitHub), does not give you any right to use them.
+
+Without the prior written permission of the copyright holder you may not copy, reproduce,
+modify, adapt, translate, publish, distribute, sell, sublicense or create derivative works from
+the Website or any part of it, nor use the MotifFlow name or logo.
+
+Third-party components keep their own licences, which this notice does not change:
+  - three.js r160, Copyright (c) 2010-2023 three.js authors, MIT License - vendor/three-LICENSE.txt
+  - Space Grotesk, SIL Open Font License 1.1 - assets/fonts/SpaceGrotesk-OFL.txt
+  - JetBrains Mono, SIL Open Font License 1.1 - assets/fonts/JetBrainsMono-OFL.txt
+
+For permissions: [contact email]

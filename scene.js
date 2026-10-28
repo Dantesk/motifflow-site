@@ -9,7 +9,7 @@
   Positions for acts 0, 2 and 4 are computed on the GPU; 1 and 3 are precomputed.
   The page drives it with setTarget(progress 0..4, side -1..1).
 */
-import * as THREE from 'three';
+import * as THREE from './vendor/three.module.min.js';   // self-hosted three.js r160 (MIT, vendor/three-LICENSE.txt)
 
 const MINT = new THREE.Color('#7cf5b2');
 const LANES = ['#5fd4e8', '#f5c46b', '#a594ff', '#ff6f8e'].map((c) => new THREE.Color(c));

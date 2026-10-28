@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dantesk.github.io/motifflow-site/sitemap.xml

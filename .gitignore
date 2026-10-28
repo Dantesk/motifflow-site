@@ -1,1 +1,4 @@
 .DS_Store
+_screens/
+# note private: restano solo su questo computer
+NOTE_PRIVATE.md
