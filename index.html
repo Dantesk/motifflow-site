@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MotifFlow — one loop, four futures</title>
+<meta name="description" content="MotifFlow is a VST3 / AU and standalone plugin for macOS and Windows that turns one MIDI or audio loop into four musical variations for Trap, Drill, Boom Bap and R&amp;B.">
+<meta name="theme-color" content="#0b0f0d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MotifFlow — one loop, four futures">
+<meta property="og:description" content="Drop a loop, get four variations: Safe, Bounce, Evolution, Wild. VST3, AU and standalone for macOS and Windows.">
+<meta property="og:image" content="assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/motifflow_icon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="MotifFlow home">
+    <img src="assets/motifflow_icon_256.png" alt="" width="32" height="32">
+    <span>MotifFlow</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#how" data-i18n="nav.how">How it works</a>
+    <a href="#variations" data-i18n="nav.variations">Variations</a>
+    <a href="#features" data-i18n="nav.features">Features</a>
+    <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+    <a href="#faq" data-i18n="nav.faq">FAQ</a>
+  </nav>
+  <div class="nav-end">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="it" aria-pressed="false">IT</button>
+    </div>
+    <a class="btn btn-buy btn-sm" href="#buy" data-checkout data-i18n="nav.buy">Buy €59</a>
+  </div>
+</header>
+
+<!-- DAW-style position readout, follows the scroll story -->
+<div class="transport" aria-hidden="true">
+  <span class="transport-pos" id="transportPos">001.1.1</span>
+  <span class="transport-act" id="transportAct">Audio</span>
+</div>
+
+<main id="main">
+
+  <!-- ACT 0 — hero / waveform -->
+  <section class="hero" id="top" data-act="0" data-act-name="act.audio">
+    <div class="wrap hero-inner">
+      <h1 class="hero-title reveal">
+        <span data-i18n="hero.t1">One loop.</span>
+        <span data-i18n="hero.t2">Four futures.</span>
+      </h1>
+      <p class="hero-sub reveal" data-i18n="hero.sub">Drop in a MIDI or audio loop and MotifFlow writes four new versions of it — melody, chords and bass — tuned to Trap, Drill, Boom Bap and R&amp;B. Drag the one you like straight into your DAW.</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-buy" href="#buy" data-checkout data-i18n="cta.buy">Buy for €59</a>
+        <a class="btn btn-ghost" href="#trial" data-i18n="cta.trial">Try it free for 14 days</a>
+      </div>
+      <p class="formats reveal">VST3 <i></i> AU <i></i> Standalone <i></i> macOS <i></i> Windows</p>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- How it works -->
+  <section class="block" id="how" data-act="0.55" data-act-name="act.audio">
+    <div class="wrap">
+      <div class="panel-text reveal">
+        <h2 data-i18n="how.title">From loop to new ideas in three moves</h2>
+        <p class="lede" data-i18n="how.lede">No prompts, no presets to learn. You bring the musical idea; MotifFlow brings options.</p>
+      </div>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-n">1</span>
+          <h3 data-i18n="how.s1.t">Drop a loop</h3>
+          <p data-i18n="how.s1.p">A MIDI clip, or an audio file (WAV or MP3). Audio is transcribed to notes for you.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-n">2</span>
+          <h3 data-i18n="how.s2.t">Get four variations</h3>
+          <p data-i18n="how.s2.p">Safe, Bounce, Evolution and Wild — each one a different distance from your original.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-n">3</span>
+          <h3 data-i18n="how.s3.t">Drag it into your DAW</h3>
+          <p data-i18n="how.s3.p">Drag any lane out as MIDI or WAV, or play it live through your own instruments.</p>
+        </li>
+      </ol>
+      <figure class="demo reveal">
+        <div class="demo-frame">
+          <div class="demo-bar"><i></i><i></i><i></i><span>MotifFlow</span></div>
+          <div class="demo-body">
+            <video class="demo-video" controls playsinline preload="metadata" poster="assets/promo-poster.jpg"
+                   aria-label="MotifFlow demo: one loop becomes four variations">
+              <source src="assets/MotifFlow_promo.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ACT 1 — transcription -->
+  <section class="block" id="neural" data-act="1" data-act-name="act.transcribe">
+    <div class="wrap">
+      <article class="panel-text glass reveal">
+        <p class="tag" data-i18n="neural.tag">Audio to MIDI, built in</p>
+        <h2 data-i18n="neural.title">Neural audio-to-MIDI</h2>
+        <p data-i18n="neural.p1">Got a bounce, a sample or a voice memo instead of MIDI? Drop the WAV or MP3 and MotifFlow turns it into notes before generating.</p>
+        <p class="attribution" data-i18n="neural.attr">Powered by Basic Pitch, the open-source neural model by Spotify's Audio Intelligence Lab (Apache 2.0).</p>
+        <ul class="ticks">
+          <li data-i18n="neural.l1">Drum removal, so the hats don't turn into notes</li>
+          <li data-i18n="neural.l2">Overtone cleaning for tidier, playable MIDI</li>
+          <li data-i18n="neural.l3">Live “Adjust notes” sliders — hear the result change as you move them</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ACT 2 — variations -->
+  <section class="block" id="variations" data-act="2" data-act-name="act.variations">
+    <div class="wrap">
+      <div class="panel-text reveal">
+        <h2 data-i18n="var.title">Four lanes, four directions</h2>
+        <p class="lede" data-i18n="var.lede">Every generation gives you the same loop pushed four different distances. Polyphonic throughout: melody, chords and bass.</p>
+      </div>
+      <div class="lanes">
+        <div class="lane reveal" style="--c:var(--safe)">
+          <h3>Safe</h3>
+          <p data-i18n="var.safe">Stays close to the original. Small, tasteful changes you can use right away.</p>
+          <svg class="lane-roll" viewBox="0 0 160 28" aria-hidden="true"><rect x="2" y="16" width="26" height="5"/><rect x="32" y="12" width="18" height="5"/><rect x="54" y="16" width="26" height="5"/><rect x="84" y="8" width="18" height="5"/><rect x="106" y="12" width="26" height="5"/><rect x="136" y="16" width="20" height="5"/></svg>
+        </div>
+        <div class="lane reveal" style="--c:var(--bounce)">
+          <h3>Bounce</h3>
+          <p data-i18n="var.bounce">Same notes, new rhythm. Shifts the groove, the gaps and the syncopation.</p>
+          <svg class="lane-roll" viewBox="0 0 160 28" aria-hidden="true"><rect x="2" y="16" width="8" height="5"/><rect x="16" y="16" width="8" height="5"/><rect x="34" y="12" width="12" height="5"/><rect x="56" y="16" width="6" height="5"/><rect x="66" y="8" width="14" height="5"/><rect x="92" y="12" width="6" height="5"/><rect x="104" y="12" width="6" height="5"/><rect x="120" y="16" width="14" height="5"/><rect x="142" y="8" width="8" height="5"/></svg>
+        </div>
+        <div class="lane reveal" style="--c:var(--evo)">
+          <h3>Evolution</h3>
+          <p data-i18n="var.evo">Develops the motif and reharmonises it, like the next section of the song.</p>
+          <svg class="lane-roll" viewBox="0 0 160 28" aria-hidden="true"><rect x="2" y="16" width="22" height="5"/><rect x="28" y="12" width="18" height="5"/><rect x="50" y="8" width="22" height="5"/><rect x="76" y="4" width="18" height="5"/><rect x="98" y="8" width="16" height="5"/><rect x="118" y="2" width="18" height="5"/><rect x="140" y="6" width="16" height="5"/></svg>
+        </div>
+        <div class="lane reveal" style="--c:var(--wild)">
+          <h3>Wild</h3>
+          <p data-i18n="var.wild">Bold moves. Big leaps and surprising turns for when you want to be shaken up.</p>
+          <svg class="lane-roll" viewBox="0 0 160 28" aria-hidden="true"><rect x="2" y="20" width="10" height="5"/><rect x="18" y="2" width="14" height="5"/><rect x="38" y="14" width="6" height="5"/><rect x="50" y="6" width="22" height="5"/><rect x="78" y="22" width="10" height="5"/><rect x="94" y="10" width="8" height="5"/><rect x="108" y="0" width="16" height="5"/><rect x="132" y="18" width="24" height="5"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learns your style -->
+  <section class="block" id="style" data-act="2" data-act-name="act.variations">
+    <div class="wrap">
+      <article class="panel-text glass reveal right">
+        <h2 data-i18n="style.title">It learns how you write</h2>
+        <p data-i18n="style.p">Point MotifFlow at your own MIDI collection and it picks up your habits, so the variations sound like you on a good day — not like everyone else.</p>
+        <dl class="traits">
+          <div><dt data-i18n="style.key">Key</dt><dd data-i18n="style.key.d">the keys you gravitate to</dd></div>
+          <div><dt data-i18n="style.swing">Swing</dt><dd data-i18n="style.swing.d">how far behind the grid you sit</dd></div>
+          <div><dt data-i18n="style.density">Density</dt><dd data-i18n="style.density.d">busy or spacious</dd></div>
+          <div><dt data-i18n="style.colour">Chord colour</dt><dd data-i18n="style.colour.d">triads, sevenths, extensions</dd></div>
+          <div><dt data-i18n="style.dissonance">Dissonance</dt><dd data-i18n="style.dissonance.d">how much tension you like</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- Musical intelligence -->
+  <section class="block" id="music" data-act="2.1" data-act-name="act.variations">
+    <div class="wrap">
+      <article class="panel-text glass reveal">
+        <h2 data-i18n="music.title">Musical rules, not random notes</h2>
+        <p data-i18n="music.p">Under the hood, MotifFlow thinks like an arranger. The result stays in key, voices chords smoothly and keeps the hook recognisable.</p>
+        <ul class="chips">
+          <li data-i18n="music.c1">Voice leading</li>
+          <li data-i18n="music.c2">Avoid notes</li>
+          <li data-i18n="music.c3">Tension knob</li>
+          <li data-i18n="music.c4">Motif coherence</li>
+          <li data-i18n="music.c5">Humanize</li>
+          <li data-i18n="music.c6">Genre swing</li>
+        </ul>
+        <p class="small" data-i18n="music.genres">Genre profiles for Trap, Drill, Boom Bap and R&amp;B shape rhythm, range and feel.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ACT 3 — into the DAW -->
+  <section class="block" id="workflow" data-act="3" data-act-name="act.daw">
+    <div class="wrap">
+      <div class="panel-text reveal">
+        <h2 data-i18n="wf.title">Built to live in your session</h2>
+        <p class="lede" data-i18n="wf.lede">An editor that feels like your DAW, and output that goes wherever your instruments are.</p>
+      </div>
+      <div class="wf-grid">
+        <div class="wf reveal">
+          <h3 data-i18n="wf.a.t">Drag and drop MIDI</h3>
+          <p data-i18n="wf.a.p">Drag a clip straight onto a DAW track. Export a single lane or all four at once.</p>
+        </div>
+        <div class="wf reveal">
+          <h3 data-i18n="wf.b.t">MIDI out, split by part</h3>
+          <p data-i18n="wf.b.p">Play your own synths and samplers live. Each part has its own channel:</p>
+          <ul class="channels">
+            <li><b>ch 1</b> <span data-i18n="wf.ch1">melody</span></li>
+            <li><b>ch 2</b> <span data-i18n="wf.ch2">chords</span></li>
+            <li><b>ch 3</b> <span data-i18n="wf.ch3">bass</span></li>
+          </ul>
+        </div>
+        <div class="wf reveal">
+          <h3 data-i18n="wf.c.t">A proper editor</h3>
+          <p data-i18n="wf.c.p">Zoom, scroll and undo. Syncs to your host tempo, so what you hear is what you drag.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature grid -->
+  <section class="block" id="features" data-act="3.45" data-act-name="act.daw">
+    <div class="wrap">
+      <div class="panel-text reveal">
+        <h2 data-i18n="feat.title">Everything in the box</h2>
+      </div>
+      <div class="feat-grid reveal">
+        <div class="feat-col">
+          <h3 data-i18n="feat.gen">Generate</h3>
+          <ul>
+            <li data-i18n="feat.g1">Four variations per loop</li>
+            <li data-i18n="feat.g2">Melody, chords and bass</li>
+            <li data-i18n="feat.g3">MIDI or audio input (WAV, MP3)</li>
+            <li data-i18n="feat.g4">Genre profiles: Trap, Drill, Boom Bap, R&amp;B</li>
+            <li data-i18n="feat.g5">Learns your style from your MIDI</li>
+            <li data-i18n="feat.g6">Lock parts and regenerate selected bars</li>
+            <li data-i18n="feat.g7">Style presets and “Generate seed” from scratch</li>
+            <li data-i18n="feat.g8">Example loops and a guided first start</li>
+          </ul>
+        </div>
+        <div class="feat-col">
+          <h3 data-i18n="feat.shape">Shape</h3>
+          <ul>
+            <li data-i18n="feat.s1">Tension knob and motif coherence</li>
+            <li data-i18n="feat.s2">Voice leading and avoid notes</li>
+            <li data-i18n="feat.s3">Humanize and genre swing</li>
+            <li data-i18n="feat.s4">Drum removal and overtone cleaning for audio</li>
+            <li data-i18n="feat.s5">Strum, voicing and arpeggiator</li>
+            <li data-i18n="feat.s6">Chord names on every lane</li>
+            <li data-i18n="feat.s7">A/B against the original, undo and redo</li>
+          </ul>
+        </div>
+        <div class="feat-col">
+          <h3 data-i18n="feat.out">Output</h3>
+          <ul>
+            <li data-i18n="feat.o1">Drag MIDI into any DAW</li>
+            <li data-i18n="feat.o2">Export one lane or all</li>
+            <li data-i18n="feat.o3">MIDI out on channels 1, 2, 3</li>
+            <li data-i18n="feat.o4">Host tempo sync</li>
+            <li data-i18n="feat.o5">Interface in English and Italian</li>
+            <li data-i18n="feat.o6">WAV export and separate voices (MIDI + WAV)</li>
+            <li data-i18n="feat.o7">History and favourites</li>
+            <li data-i18n="feat.o8">VST3, Audio Unit (Logic) and standalone</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 4 — pricing -->
+  <section class="block" id="pricing" data-act="4" data-act-name="act.release">
+    <div class="wrap pricing-wrap">
+      <div class="panel-text reveal">
+        <h2 data-i18n="price.title">Pay once. Keep it.</h2>
+        <p class="lede" data-i18n="price.lede">No subscription. Everything you make with MotifFlow is yours to release.</p>
+      </div>
+      <div class="price-card reveal" id="buy">
+        <div class="price-head">
+          <img src="assets/motifflow_icon_256.png" alt="" width="56" height="56">
+          <div>
+            <h3>MotifFlow 1</h3>
+            <p class="muted" data-i18n="price.kind">Launch price</p>
+          </div>
+        </div>
+        <p class="price"><s aria-label="was €99">€99</s> <strong>€59</strong></p>
+        <ul class="ticks">
+          <li data-i18n="price.l1">One-time purchase</li>
+          <li data-i18n="price.l2">Free updates for all 1.x versions</li>
+          <li data-i18n="price.l3">Use it on 2 computers</li>
+          <li data-i18n="price.l4">Royalty-free output — release anything you make</li>
+          <li data-i18n="price.l5">VST3, AU (Mac) and standalone, macOS and Windows</li>
+        </ul>
+        <a class="btn btn-buy btn-wide" href="#buy" data-checkout data-i18n="cta.buy">Buy for €59</a>
+        <div class="trial" id="trial">
+          <p data-i18n="price.trial">Not sure yet? Try everything free for 14 days.</p>
+          <div class="trial-btns">
+            <a class="btn btn-ghost btn-sm" href="#trial" data-trial="mac" data-i18n="trial.mac">Download for macOS</a>
+            <a class="btn btn-ghost btn-sm" href="#trial" data-trial="win" data-i18n="trial.win">Download for Windows</a>
+          </div>
+          <p class="trial-note" id="trialNote" hidden data-i18n="trial.note">Trial downloads open at launch.</p>
+        </div>
+        <div class="req">
+          <h4 data-i18n="req.title">System requirements</h4>
+          <ul>
+            <li data-i18n="req.mac">macOS 12 or later, Apple Silicon and Intel</li>
+            <li data-i18n="req.win">Windows 10 or 11, 64-bit</li>
+            <li data-i18n="req.host">A VST3 or AU host, or use the standalone app</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block" id="faq" data-act="4" data-act-name="act.release">
+    <div class="wrap faq-wrap">
+      <h2 class="reveal" data-i18n="faq.title">Questions</h2>
+      <div class="faq reveal">
+        <details>
+          <summary data-i18n="faq.q1">Can I get a refund?</summary>
+          <p data-i18n="faq.a1">Yes. If MotifFlow isn't for you, ask for a refund within 14 days of purchase. You can also try it free for 14 days before buying.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q2">How many computers can I use it on?</summary>
+          <p data-i18n="faq.a2">Two. One licence covers two computers — for example your studio Mac and your laptop.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q3">Can I activate it offline?</summary>
+          <p data-i18n="faq.a3">Yes. Studio computers that stay off the internet can be activated offline.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q4">Does the music I make belong to me?</summary>
+          <p data-i18n="faq.a4">Yes. Everything MotifFlow generates for you is royalty-free. Sell it, release it, place it — no credit or fees owed.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q5">Which DAWs does it work with?</summary>
+          <p data-i18n="faq.a5">Any DAW that loads VST3 plugins, such as Ableton Live, FL Studio, Cubase, Studio One, Bitwig and Reaper. On Mac there is also an Audio Unit for Logic Pro and GarageBand: play the variations with the built-in sounds, then drag the MIDI or WAV onto a track.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q6">Does it run on Apple Silicon?</summary>
+          <p data-i18n="faq.a6">Yes. It runs on Apple Silicon and Intel Macs with macOS 12 or later.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="block final" data-act="4" data-act-name="act.release">
+    <div class="wrap final-inner reveal">
+      <img class="final-icon" src="assets/motifflow_icon_256.png" alt="" width="96" height="96">
+      <h2 data-i18n="final.title">Your next loop is already in there.</h2>
+      <div class="hero-cta">
+        <a class="btn btn-buy" href="#buy" data-checkout data-i18n="cta.buy">Buy for €59</a>
+        <a class="btn btn-ghost" href="#trial" data-i18n="cta.trial">Try it free for 14 days</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="assets/motifflow_icon_256.png" alt="" width="28" height="28">
+      <span>© 2026 MotifFlow</span>
+    </div>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="privacy.html" data-i18n="foot.privacy">Privacy</a>
+      <a href="terms.html" data-i18n="foot.terms">Terms</a>
+      <a href="terms.html#refunds" data-i18n="foot.refund">Refunds</a>
+    </nav>
+    <p class="credits" data-i18n="foot.credits">Audio-to-MIDI uses Basic Pitch (Apache-2.0). Built with JUCE. VST is a trademark of Steinberg Media Technologies GmbH.</p>
+  </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>
