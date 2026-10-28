@@ -479,3 +479,5 @@ html[lang="it"] .l-en { display: none !important; }
   .g-sec { padding-top: 56px; }
 }
 .g-sec p + .ticks, .g-sec .ticks + p, .g-sec p + .daws, .g-sec .daws + p { margin-top: 14px; }
+.footer-links { flex-wrap: wrap; row-gap: 8px; }
+.footer-links a[aria-current="page"] { color: var(--text); }

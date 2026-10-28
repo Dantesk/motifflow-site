@@ -20,6 +20,8 @@
   document.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => applyLang(b.dataset.lang)));
   const saved = store.get('mf-lang');
   applyLang(saved || ((navigator.language || '').toLowerCase().startsWith('it') ? 'it' : 'en'));
+  const year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
 
   // highlight the chapter being read
   const links = new Map();
