@@ -12,6 +12,7 @@ window.MF_I18N = {
     "nav.pricing": "Prezzo",
     "nav.faq": "FAQ",
     "nav.guide": "Guida",
+    "nav.tech": "Tecnologia",
     "nav.buy": "Acquista a 59 €",
 
     "hero.t1": "Un loop.",

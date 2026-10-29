@@ -1,4 +1,4 @@
-/* MotifFlow guide: language switch (shared with the home page) and the active chapter in the side index.
+/* MotifFlow guide and how-it-works pages: language switch (shared with the home page) and the active chapter in the side index.
    Both languages are in the HTML; the <html lang> attribute decides which one is shown (see styles.css). */
 (() => {
   const store = {
@@ -13,7 +13,8 @@
   function applyLang(next) {
     const lang = next === 'it' ? 'it' : 'en';
     document.documentElement.lang = lang;
-    document.title = titles[lang];
+    const custom = document.body.dataset[lang === 'it' ? 'titleIt' : 'titleEn'];
+    document.title = custom || titles[lang];
     document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     store.set('mf-lang', lang);
   }

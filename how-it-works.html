@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#0b0f0d">
+<title>How MotifFlow works — the technology</title>
+<meta name="description" content="Inside MotifFlow: how the variation engine builds and scores ideas, how genre profiles and Learn my style shape the groove, how audio becomes MIDI, and how we measure it.">
+<link rel="canonical" href="https://dantesk.github.io/motifflow-site/how-it-works.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MotifFlow">
+<meta property="og:url" content="https://dantesk.github.io/motifflow-site/how-it-works.html">
+<meta property="og:title" content="How MotifFlow works">
+<meta property="og:description" content="The variation engine, genre profiles, Learn my style and audio-to-MIDI, explained, with our measurements and their limits.">
+<meta property="og:image" content="https://dantesk.github.io/motifflow-site/assets/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="assets/motifflow_icon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/space-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="guide-page" data-title-en="How MotifFlow works — the technology" data-title-it="Come funziona MotifFlow — la tecnologia">
+<a class="skip" href="#content"><span class="l-en">Skip to content</span><span class="l-it" lang="it">Vai al contenuto</span></a>
+
+<header class="nav scrolled">
+  <a class="brand" href="index.html"><img src="assets/motifflow_icon_256.png" alt="" width="32" height="32"><span>MotifFlow</span></a>
+  <div class="nav-end">
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="it" aria-pressed="false">IT</button>
+    </div>
+    <a class="btn btn-ghost btn-sm" href="index.html"><span class="l-en">Back to site</span><span class="l-it" lang="it">Torna al sito</span></a>
+  </div>
+</header>
+
+<div class="guide">
+  <nav class="guide-toc" aria-label="Contents">
+    <p class="toc-title"><span class="l-en">How it works</span><span class="l-it" lang="it">Come funziona</span></p>
+    <ol>
+      <li><a href="#principles"><span class="l-en">Principles</span><span class="l-it" lang="it">Principi</span></a></li>
+      <li><a href="#reading"><span class="l-en">Reading the loop</span><span class="l-it" lang="it">Leggere il loop</span></a></li>
+      <li><a href="#engine"><span class="l-en">The variation engine</span><span class="l-it" lang="it">Il motore delle variazioni</span></a></li>
+      <li><a href="#genres"><span class="l-en">Genre profiles</span><span class="l-it" lang="it">Profili di genere</span></a></li>
+      <li><a href="#style"><span class="l-en">Learn my style</span><span class="l-it" lang="it">Impara il mio stile</span></a></li>
+      <li><a href="#audio"><span class="l-en">Audio to MIDI</span><span class="l-it" lang="it">Audio in MIDI</span></a></li>
+      <li><a href="#measure"><span class="l-en">How we measure</span><span class="l-it" lang="it">Come misuriamo</span></a></li>
+      <li><a href="#next"><span class="l-en">What comes next</span><span class="l-it" lang="it">Prossimi passi</span></a></li>
+      <li><a href="#refs"><span class="l-en">References</span><span class="l-it" lang="it">Riferimenti</span></a></li>
+    </ol>
+  </nav>
+
+  <main id="content" class="guide-body">
+
+    <header class="guide-head">
+      <p class="eyebrow"><span class="l-en">Technology · version 0.9</span><span class="l-it" lang="it">Tecnologia · versione 0.9</span></p>
+      <h1><span class="l-en">How MotifFlow works</span><span class="l-it" lang="it">Come funziona MotifFlow</span></h1>
+      <p class="lead l-en">What happens between dropping a loop and hearing four variations: the music theory, the groove, the neural network, and the numbers we use to check our own work. Including where it still falls short.</p>
+      <p class="lead l-it" lang="it">Cosa succede tra il momento in cui trascini un loop e quello in cui senti quattro variazioni: la teoria musicale, il groove, la rete neurale e i numeri con cui controlliamo il nostro lavoro. Compreso dove non è ancora abbastanza.</p>
+      <ol class="flow" aria-label="Pipeline">
+        <li><span class="l-en">Your loop</span><span class="l-it" lang="it">Il tuo loop</span><small>MIDI · WAV · MP3</small></li>
+        <li><span class="l-en">Read</span><span class="l-it" lang="it">Lettura</span><small><span class="l-en">key · voices · tempo</span><span class="l-it" lang="it">tonalità · voci · tempo</span></small></li>
+        <li><span class="l-en">Generate</span><span class="l-it" lang="it">Genera</span><small><span class="l-en">24 candidates per lane</span><span class="l-it" lang="it">24 candidate per corsia</span></small></li>
+        <li><span class="l-en">Repair &amp; score</span><span class="l-it" lang="it">Ripara e valuta</span><small><span class="l-en">harmony · groove · novelty</span><span class="l-it" lang="it">armonia · groove · novità</span></small></li>
+        <li class="flow-end"><span class="l-en">4 variations</span><span class="l-it" lang="it">4 variazioni</span><small>Safe · Bounce · Evolution · Wild</small></li>
+      </ol>
+    </header>
+
+    <!-- 1 -->
+    <section id="principles" class="g-sec cards-2">
+      <h2><span class="num">01</span><span class="l-en">Principles</span><span class="l-it" lang="it">Principi</span></h2>
+      <div class="cards l-en">
+        <div class="card"><h3>Everything runs on your computer</h3><p>No cloud, no account, no upload. Your loops, your MIDI library and your style profile never leave the machine.</p></div>
+        <div class="card"><h3>Musical rules, not random notes</h3><p>Every idea is built with operations a producer would use, then checked against harmony and groove before you hear it.</p></div>
+        <div class="card"><h3>Same input, same result</h3><p>The same loop with the same settings gives the same variation, on Mac and Windows. A session reopened next month sounds the same.</p></div>
+        <div class="card"><h3>Your notes stay yours</h3><p>The Original is never changed. Locked notes, bars and voices are put back exactly as they were in every variation.</p></div>
+      </div>
+      <div class="cards l-it" lang="it">
+        <div class="card"><h3>Tutto gira sul tuo computer</h3><p>Niente cloud, niente account, niente upload. I tuoi loop, la tua libreria MIDI e il tuo profilo di stile non lasciano mai la macchina.</p></div>
+        <div class="card"><h3>Regole musicali, non note a caso</h3><p>Ogni idea nasce da operazioni che userebbe un producer e viene controllata su armonia e groove prima che tu la senta.</p></div>
+        <div class="card"><h3>Stesso input, stesso risultato</h3><p>Lo stesso loop con le stesse impostazioni dà la stessa variazione, su Mac e su Windows. Una sessione riaperta tra un mese suona uguale.</p></div>
+        <div class="card"><h3>Le tue note restano tue</h3><p>L'Originale non viene mai modificato. Note, battute e voci bloccate tornano identiche in ogni variazione.</p></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="reading" class="g-sec">
+      <h2><span class="num">02</span><span class="l-en">Reading the loop</span><span class="l-it" lang="it">Leggere il loop</span></h2>
+      <div class="l-en">
+        <p>Before changing anything, MotifFlow has to understand what it is looking at. Three things matter:</p>
+        <dl class="defs">
+          <dt>Key</dt><dd>Each note is weighted by its length and loudness, and the result is compared with the classic Krumhansl–Kessler profiles: how much each degree of a major or minor key tends to be heard. The best match among the 24 keys wins.</dd>
+          <dt>Voices</dt><dd>Every note is tagged as <b>melody</b> (the top line), <b>chords</b> (the inner voices) or <b>bass</b> (the low line). The engine treats them differently: a melody can move freely, a chord should keep its function, a bass should land on the root.</dd>
+          <dt>Tempo and grid</dt><dd>MIDI files carry their tempo. For audio, MotifFlow reads the BPM from the file name when it is there, otherwise it works it out from the loop length and the rhythm of the attacks, with your DAW's tempo as a hint.</dd>
+        </dl>
+      </div>
+      <div class="l-it" lang="it">
+        <p>Prima di cambiare qualcosa, MotifFlow deve capire cosa ha davanti. Contano tre cose:</p>
+        <dl class="defs">
+          <dt>Tonalità</dt><dd>Ogni nota viene pesata per durata e volume e il risultato è confrontato con i profili classici di Krumhansl–Kessler: quanto ciascun grado di una tonalità maggiore o minore tende a essere sentito. Vince la tonalità che corrisponde meglio tra le 24 possibili.</dd>
+          <dt>Voci</dt><dd>Ogni nota viene etichettata come <b>melodia</b> (la linea più alta), <b>accordi</b> (le voci interne) o <b>basso</b> (la linea più bassa). Il motore le tratta in modo diverso: una melodia può muoversi liberamente, un accordo deve mantenere la sua funzione, un basso deve appoggiarsi sulla fondamentale.</dd>
+          <dt>Tempo e griglia</dt><dd>I file MIDI portano il loro tempo. Per l'audio, MotifFlow legge i BPM dal nome del file quando ci sono, altrimenti li ricava dalla lunghezza del loop e dal ritmo degli attacchi, usando il tempo della DAW come suggerimento.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="engine" class="g-sec">
+      <h2><span class="num">03</span><span class="l-en">The variation engine</span><span class="l-it" lang="it">Il motore delle variazioni</span></h2>
+      <div class="l-en">
+        <p>Asking for "a variation" is easy; asking for a <i>good</i> one is not. A single random change usually sounds wrong. So for each lane MotifFlow does not make one attempt: it makes <b>24</b>, judges them, and keeps the best.</p>
+        <ol class="steps-list">
+          <li><b>Generate.</b> Each candidate applies a mix of musical operations: diatonic substitutions, sequences, inversions, pushed and delayed chords, re-hits on the genre's rhythmic cells, passing notes, octave moves, re-voicing and re-harmonisation. How often each one is used depends on the lane and on the genre.</li>
+          <li><b>Repair.</b> Harmony rules go through every candidate: no minor seconds against the chord, sevenths and tritones on the bass used with care, awkward leaps smoothed out.</li>
+          <li><b>Restore.</b> Everything you locked, and every voice you set not to vary, goes back exactly as it was.</li>
+          <li><b>Score.</b> Each candidate is measured on novelty (how far from the Original), melodic contour, harmony, continuity, groove fit with the genre, consonance, and how different it is from the other lanes.</li>
+          <li><b>Choose.</b> The best score wins. Novelty is not "more is better": each lane has a target range, and the <b>Identity</b> knob moves you inside it.</li>
+        </ol>
+      </div>
+      <div class="l-it" lang="it">
+        <p>Chiedere "una variazione" è facile; chiederne una <i>bella</i> no. Un singolo cambiamento a caso di solito suona sbagliato. Per questo MotifFlow non fa un solo tentativo per corsia: ne fa <b>24</b>, li giudica e tiene il migliore.</p>
+        <ol class="steps-list">
+          <li><b>Genera.</b> Ogni candidata applica un mix di operazioni musicali: sostituzioni diatoniche, sequenze, inversioni, accordi anticipati e ritardati, re-hit sulle celle ritmiche del genere, note di passaggio, spostamenti d'ottava, rivoicing e riarmonizzazione. Quanto spesso si usa ciascuna dipende dalla corsia e dal genere.</li>
+          <li><b>Ripara.</b> Le regole di armonia passano su ogni candidata: niente seconde minori contro l'accordo, settime e tritoni sul basso con cautela, salti scomodi addolciti.</li>
+          <li><b>Ripristina.</b> Tutto ciò che hai bloccato, e ogni voce che hai scelto di non variare, torna esattamente com'era.</li>
+          <li><b>Valuta.</b> Ogni candidata viene misurata su novità (quanto si allontana dall'Originale), contorno melodico, armonia, continuità, aderenza al groove del genere, consonanza e differenza dalle altre corsie.</li>
+          <li><b>Scegli.</b> Vince il punteggio migliore. La novità non è "più è meglio": ogni corsia ha una fascia obiettivo, e la manopola <b>Identità</b> ti sposta al suo interno.</li>
+        </ol>
+      </div>
+
+      <figure class="chart">
+        <svg class="l-en" viewBox="0 0 640 200" role="img" aria-labelledby="nov-en">
+          <title id="nov-en">Novelty target range for each lane, as a share of notes changed</title>
+          <g class="axis"><line x1="120" y1="172" x2="620" y2="172"/><text x="120" y="192">0%</text><text x="245" y="192">25%</text><text x="370" y="192">50%</text><text x="495" y="192">75%</text><text x="608" y="192">100%</text></g>
+          <g class="grid"><line x1="245" y1="10" x2="245" y2="172"/><line x1="370" y1="10" x2="370" y2="172"/><line x1="495" y1="10" x2="495" y2="172"/></g>
+          <text class="lbl" x="110" y="34">Safe</text><rect class="c-safe" x="150" y="20" width="95" height="20" rx="5"/><text class="val" x="252" y="35">6–25%</text>
+          <text class="lbl" x="110" y="74">Bounce</text><rect class="c-bounce" x="195" y="60" width="150" height="20" rx="5"/><text class="val" x="352" y="75">15–45%</text>
+          <text class="lbl" x="110" y="114">Evolution</text><rect class="c-evo" x="245" y="100" width="150" height="20" rx="5"/><text class="val" x="402" y="115">25–55%</text>
+          <text class="lbl" x="110" y="154">Wild</text><rect class="c-wild" x="320" y="140" width="200" height="20" rx="5"/><text class="val" x="527" y="155">40–80%</text>
+        </svg>
+        <svg class="l-it" lang="it" viewBox="0 0 640 200" role="img" aria-labelledby="nov-it">
+          <title id="nov-it">Fascia obiettivo di novità per ogni corsia, come quota di note cambiate</title>
+          <g class="axis"><line x1="120" y1="172" x2="620" y2="172"/><text x="120" y="192">0%</text><text x="245" y="192">25%</text><text x="370" y="192">50%</text><text x="495" y="192">75%</text><text x="608" y="192">100%</text></g>
+          <g class="grid"><line x1="245" y1="10" x2="245" y2="172"/><line x1="370" y1="10" x2="370" y2="172"/><line x1="495" y1="10" x2="495" y2="172"/></g>
+          <text class="lbl" x="110" y="34">Safe</text><rect class="c-safe" x="150" y="20" width="95" height="20" rx="5"/><text class="val" x="252" y="35">6–25%</text>
+          <text class="lbl" x="110" y="74">Bounce</text><rect class="c-bounce" x="195" y="60" width="150" height="20" rx="5"/><text class="val" x="352" y="75">15–45%</text>
+          <text class="lbl" x="110" y="114">Evolution</text><rect class="c-evo" x="245" y="100" width="150" height="20" rx="5"/><text class="val" x="402" y="115">25–55%</text>
+          <text class="lbl" x="110" y="154">Wild</text><rect class="c-wild" x="320" y="140" width="200" height="20" rx="5"/><text class="val" x="527" y="155">40–80%</text>
+        </svg>
+        <figcaption class="l-en">How much of the Original each lane aims to change. Identity moves the target toward the left (closer) or the right (bolder) end of each bar.</figcaption>
+        <figcaption class="l-it" lang="it">Quanta parte dell'Originale ogni corsia punta a cambiare. Identità sposta l'obiettivo verso sinistra (più vicino) o verso destra (più audace) dentro ogni barra.</figcaption>
+      </figure>
+
+      <p class="note l-en"><b>Why it is deterministic.</b> Each candidate has its own seed, our random generator is portable across systems, and candidates are judged in parallel but always in the same order. NEW changes the seed; nothing else does.</p>
+      <p class="note l-it" lang="it"><b>Perché è deterministico.</b> Ogni candidata ha il suo seed, il nostro generatore casuale è identico su tutti i sistemi e le candidate sono valutate in parallelo ma sempre nello stesso ordine. NUOVA cambia il seed; nient'altro lo fa.</p>
+    </section>
+
+    <!-- 4 -->
+    <section id="genres" class="g-sec">
+      <h2><span class="num">04</span><span class="l-en">Genre profiles</span><span class="l-it" lang="it">Profili di genere</span></h2>
+      <div class="l-en">
+        <p>A genre, for MotifFlow, is a <b>rhythmic and harmonic vocabulary</b>: which sixteenth-note positions feel natural, how much swing, whether the accents fall on 1 and 3 (half-time) or 2 and 4 (backbeat), how often chords push ahead of the beat, how often notes slide, how colourful the chords are. The profile works in two places: it changes how often each operation is tried, and it adds a <i>groove fit</i> score so that candidates that sit right in the genre win.</p>
+        <div class="table-wrap">
+          <table class="g-table genres">
+            <thead><tr><th>Genre</th><th>Feel</th><th>Swing</th><th>Character</th></tr></thead>
+            <tbody>
+              <tr><td><b>Trap</b></td><td>Half-time</td><td>Straight</td><td>Triplet rolls, clean pushes, simple chords</td></tr>
+              <tr><td><b>Drill</b></td><td>Half-time</td><td>A touch</td><td>More anticipations, frequent slides (808 glides), darker voicings</td></tr>
+              <tr><td><b>Boom Bap</b></td><td>Backbeat 2 &amp; 4</td><td>MPC ≈ 60%</td><td>Laid back, few pushes, dusty 7ths and 9ths</td></tr>
+              <tr><td><b>R&amp;B</b></td><td>Backbeat 2 &amp; 4</td><td>Light, ≈ 56%</td><td>Behind the beat, glides, maj7 / m7 / add9 everywhere</td></tr>
+              <tr><td><b>My Style</b></td><td colspan="3">Learned from your own MIDI (next chapter)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="l-it" lang="it">
+        <p>Per MotifFlow un genere è un <b>vocabolario ritmico e armonico</b>: quali posizioni di sedicesimo suonano naturali, quanto swing, se gli accenti cadono su 1 e 3 (half-time) o su 2 e 4 (backbeat), quanto spesso gli accordi anticipano il beat, quanto spesso le note scivolano, quanto sono colorati gli accordi. Il profilo agisce in due punti: cambia quanto spesso si prova ciascuna operazione e aggiunge un punteggio di <i>aderenza al groove</i>, così vincono le candidate che stanno bene nel genere.</p>
+        <div class="table-wrap">
+          <table class="g-table genres">
+            <thead><tr><th>Genere</th><th>Feel</th><th>Swing</th><th>Carattere</th></tr></thead>
+            <tbody>
+              <tr><td><b>Trap</b></td><td>Half-time</td><td>Dritto</td><td>Rullate in terzina, anticipi puliti, accordi semplici</td></tr>
+              <tr><td><b>Drill</b></td><td>Half-time</td><td>Un tocco</td><td>Più anticipi, slide frequenti (glide dell'808), voicing più scuri</td></tr>
+              <tr><td><b>Boom Bap</b></td><td>Backbeat 2 e 4</td><td>MPC ≈ 60%</td><td>Rilassato, pochi anticipi, settime e none "polverose"</td></tr>
+              <tr><td><b>R&amp;B</b></td><td>Backbeat 2 e 4</td><td>Leggero, ≈ 56%</td><td>Dietro al beat, glide, maj7 / m7 / add9 ovunque</td></tr>
+              <tr><td><b>My Style</b></td><td colspan="3">Imparato dai tuoi MIDI (capitolo successivo)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="style" class="g-sec">
+      <h2><span class="num">05</span><span class="l-en">Learn my style</span><span class="l-it" lang="it">Impara il mio stile</span></h2>
+      <div class="l-en">
+        <p><b>It is not a neural network, and that is on purpose.</b> Learn my style is a statistical analysis of the MIDI files you point it to. It takes milliseconds, sends nothing anywhere, and its result can be explained: it builds a genre profile in exactly the same format as Trap or R&amp;B, so the engine treats your style like any other genre.</p>
+        <p>From your loops it measures:</p>
+        <ul class="ticks">
+          <li>where your attacks fall in the beat, including triplets, and how much they swing or sit behind the beat;</li>
+          <li>whether you accent 1 and 3 or 2 and 4, and how loud each position is;</li>
+          <li>your recurring rhythmic cells, the small patterns you keep coming back to;</li>
+          <li>how often your chords anticipate or drag, and how colourful they are (7ths, 9ths);</li>
+          <li>how your melodies move (steps or leaps), how often they slide, how much they rub against the chords;</li>
+          <li>which built-in genre you are closest to, used to pick the preview sounds.</li>
+        </ul>
+        <p>Rare choices are never ruled out, only made less likely, so My Style can still surprise you. The profile is saved on your computer and inside your DAW project, so a session sounds the same on another machine.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p><b>Non è una rete neurale, ed è una scelta.</b> Impara il mio stile è un'analisi statistica dei file MIDI che gli indichi. Ci mette pochi millisecondi, non invia niente e il suo risultato si può spiegare: costruisce un profilo di genere nello stesso identico formato di Trap o R&amp;B, quindi il motore tratta il tuo stile come qualsiasi altro genere.</p>
+        <p>Dai tuoi loop misura:</p>
+        <ul class="ticks">
+          <li>dove cadono i tuoi attacchi nel movimento, terzine comprese, e quanto swingano o stanno dietro al beat;</li>
+          <li>se accenti 1 e 3 oppure 2 e 4, e quanto forte suoni ogni posizione;</li>
+          <li>le tue celle ritmiche ricorrenti, i piccoli schemi a cui torni sempre;</li>
+          <li>quanto spesso i tuoi accordi anticipano o ritardano, e quanto sono colorati (settime, none);</li>
+          <li>come si muovono le tue melodie (per grado o per salto), quanto spesso scivolano, quanto "sfregano" contro gli accordi;</li>
+          <li>a quale genere integrato sei più vicino, usato per scegliere i suoni di anteprima.</li>
+        </ul>
+        <p>Le scelte rare non vengono mai escluse, solo rese meno probabili, così My Style può ancora sorprenderti. Il profilo è salvato sul tuo computer e dentro il progetto della DAW, quindi una sessione suona uguale anche su un'altra macchina.</p>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="audio" class="g-sec">
+      <h2><span class="num">06</span><span class="l-en">Audio to MIDI</span><span class="l-it" lang="it">Audio in MIDI</span></h2>
+      <div class="l-en">
+        <p>When you drop a WAV or MP3, MotifFlow has to <i>hear</i> the notes first. At the centre is <b>Basic Pitch</b>, a small neural network published by Spotify's Audio Intelligence Lab and trained on real recordings of many instruments. We run it in our own C++ code inside the plug-in, with the original weights, so no Python and no internet are needed.</p>
+        <ol class="steps-list">
+          <li><b>Prepare.</b> The file is read, mixed to mono, and the silence that MP3 and AAC encoders add at the start is removed, so notes land on the grid.</li>
+          <li><b>Remove the drums</b> (optional). A harmonic / percussive separation filter takes out kicks, hi-hats and claps before the network listens.</li>
+          <li><b>Listen.</b> Every 11.6 ms the network says, for each of the 88 keys, how likely the note is to be <i>sounding</i> and to be <i>starting</i>, plus a fine pitch contour.</li>
+          <li><b>Correct the tuning.</b> Many samples are a few dozen cents sharp or flat, which makes the network pick the wrong key. MotifFlow reads the pitch contour, estimates how far off the sample is, and re-tunes it before the final pass. This is the <b>MotifFlow clean-up</b> switch.</li>
+          <li><b>Turn into notes.</b> Peaks become notes that last while the energy holds. Then we remove ghost harmonics (a faint copy an octave above a loud note), stitch back held notes split by other voices, and drop notes too short to be real.</li>
+          <li><b>Place on the grid.</b> Tempo is found (step 02) and the notes become beats and sixteenths you can edit. The NOTES sliders only redo this last part, so they respond instantly.</li>
+        </ol>
+      </div>
+      <div class="l-it" lang="it">
+        <p>Quando trascini un WAV o un MP3, MotifFlow deve prima <i>sentire</i> le note. Al centro c'è <b>Basic Pitch</b>, una piccola rete neurale pubblicata dall'Audio Intelligence Lab di Spotify e addestrata su registrazioni reali di molti strumenti. La eseguiamo con il nostro codice C++ dentro il plugin, con i pesi originali, quindi non servono né Python né internet.</p>
+        <ol class="steps-list">
+          <li><b>Prepara.</b> Il file viene letto, portato in mono, e si toglie il silenzio che gli encoder MP3 e AAC aggiungono all'inizio, così le note cadono in griglia.</li>
+          <li><b>Togli la batteria</b> (facoltativo). Un filtro di separazione armonico / percussivo toglie cassa, hi-hat e clap prima che la rete ascolti.</li>
+          <li><b>Ascolta.</b> Ogni 11,6 ms la rete dice, per ciascuno degli 88 tasti, quanto è probabile che la nota stia <i>suonando</i> e che stia <i>iniziando</i>, più un contorno di intonazione fine.</li>
+          <li><b>Correggi l'accordatura.</b> Molti sample sono calanti o crescenti di qualche decina di cent, e questo fa scegliere alla rete il tasto sbagliato. MotifFlow legge il contorno di intonazione, stima di quanto è scordato il sample e lo riaccorda prima del passaggio finale. È l'interruttore <b>Pulizia MotifFlow</b>.</li>
+          <li><b>Trasforma in note.</b> I picchi diventano note che durano finché l'energia resta. Poi togliamo gli armonici fantasma (una copia debole un'ottava sopra una nota forte), ricuciamo le note tenute spezzate da altre voci ed eliminiamo le note troppo corte per essere vere.</li>
+          <li><b>Metti in griglia.</b> Si trova il tempo (capitolo 02) e le note diventano movimenti e sedicesimi che puoi modificare. Gli slider di REGOLA NOTE rifanno solo quest'ultima parte, per questo rispondono subito.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="measure" class="g-sec">
+      <h2><span class="num">07</span><span class="l-en">How we measure</span><span class="l-it" lang="it">Come misuriamo</span></h2>
+      <div class="l-en">
+        <p>"Sounds better to me" is not a measurement. We keep a <b>test bench</b>: loops rendered from MIDI we already know, so the right answer is exact. Each loop is played with five kinds of sound (keys, pluck, pad, bell and the genre kits) and degraded in nine ways that real samples go through: clean, saturation, clipping, bit-crushing, reverb, sidechain, drums on top, detuned by 35 cents, and a full "trap mix" with all of it.</p>
+        <p>The score is the standard note <b>F1</b>: a note counts as found only if the pitch is exact and the start is within 50 ms. 1.0 is perfect. Every change to the transcriber is run against the bench before it ships, and it is switched on only if it helps.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <p>"Mi sembra che suoni meglio" non è una misura. Teniamo un <b>banco di prova</b>: loop generati da MIDI che conosciamo già, quindi la risposta giusta è esatta. Ogni loop viene suonato con cinque tipi di suono (keys, pluck, pad, bell e i kit dei generi) e rovinato in nove modi che i sample reali subiscono: pulito, saturazione, clipping, bit-crush, riverbero, sidechain, batteria sopra, scordato di 35 cent e un "mix trap" completo con tutto insieme.</p>
+        <p>Il punteggio è l'<b>F1</b> standard sulle note: una nota conta come trovata solo se l'altezza è esatta e l'attacco cade entro 50 ms. 1,0 è perfetto. Ogni modifica al trascrittore passa dal banco prima di uscire, e viene attivata solo se aiuta.</p>
+      </div>
+
+      <figure class="chart">
+        <svg class="l-en" viewBox="0 0 640 250" role="img" aria-labelledby="cond-en">
+          <title id="cond-en">Note F1 by condition, Basic Pitch alone versus with MotifFlow clean-up</title>
+          <g class="axis"><line x1="130" y1="222" x2="620" y2="222"/><text x="130" y="242">0</text><text x="252" y="242">0.25</text><text x="375" y="242">0.50</text></g>
+          <g class="grid"><line x1="252" y1="8" x2="252" y2="222"/><line x1="375" y1="8" x2="375" y2="222"/></g>
+          <text class="lbl" x="120" y="27">Clean</text><rect class="c-base" x="130" y="12" width="218" height="10" rx="3"/><rect class="c-mf" x="130" y="24" width="218" height="10" rx="3"/><text class="val" x="356" y="34">0.444 → 0.445</text>
+          <text class="lbl" x="120" y="67">Detuned</text><rect class="c-base" x="130" y="52" width="205" height="10" rx="3"/><rect class="c-mf" x="130" y="64" width="221" height="10" rx="3"/><text class="val hi" x="359" y="74">0.418 → 0.452</text>
+          <text class="lbl" x="120" y="107">Drums on top</text><rect class="c-base" x="130" y="92" width="215" height="10" rx="3"/><rect class="c-mf" x="130" y="104" width="216" height="10" rx="3"/><text class="val" x="354" y="114">0.438 → 0.441</text>
+          <text class="lbl" x="120" y="147">Reverb</text><rect class="c-base" x="130" y="132" width="202" height="10" rx="3"/><rect class="c-mf" x="130" y="144" width="203" height="10" rx="3"/><text class="val" x="341" y="154">0.413 → 0.415</text>
+          <text class="lbl" x="120" y="187">Trap mix</text><rect class="c-base" x="130" y="172" width="210" height="10" rx="3"/><rect class="c-mf" x="130" y="184" width="212" height="10" rx="3"/><text class="val" x="350" y="194">0.428 → 0.432</text>
+        </svg>
+        <svg class="l-it" lang="it" viewBox="0 0 640 250" role="img" aria-labelledby="cond-it">
+          <title id="cond-it">F1 sulle note per condizione, Basic Pitch da solo contro Pulizia MotifFlow</title>
+          <g class="axis"><line x1="130" y1="222" x2="620" y2="222"/><text x="130" y="242">0</text><text x="252" y="242">0,25</text><text x="375" y="242">0,50</text></g>
+          <g class="grid"><line x1="252" y1="8" x2="252" y2="222"/><line x1="375" y1="8" x2="375" y2="222"/></g>
+          <text class="lbl" x="120" y="27">Pulito</text><rect class="c-base" x="130" y="12" width="218" height="10" rx="3"/><rect class="c-mf" x="130" y="24" width="218" height="10" rx="3"/><text class="val" x="356" y="34">0,444 → 0,445</text>
+          <text class="lbl" x="120" y="67">Scordato</text><rect class="c-base" x="130" y="52" width="205" height="10" rx="3"/><rect class="c-mf" x="130" y="64" width="221" height="10" rx="3"/><text class="val hi" x="359" y="74">0,418 → 0,452</text>
+          <text class="lbl" x="120" y="107">Con batteria</text><rect class="c-base" x="130" y="92" width="215" height="10" rx="3"/><rect class="c-mf" x="130" y="104" width="216" height="10" rx="3"/><text class="val" x="354" y="114">0,438 → 0,441</text>
+          <text class="lbl" x="120" y="147">Riverbero</text><rect class="c-base" x="130" y="132" width="202" height="10" rx="3"/><rect class="c-mf" x="130" y="144" width="203" height="10" rx="3"/><text class="val" x="341" y="154">0,413 → 0,415</text>
+          <text class="lbl" x="120" y="187">Mix trap</text><rect class="c-base" x="130" y="172" width="210" height="10" rx="3"/><rect class="c-mf" x="130" y="184" width="212" height="10" rx="3"/><text class="val" x="350" y="194">0,428 → 0,432</text>
+        </svg>
+        <p class="legend"><span class="sw sw-base"></span><span class="l-en">Basic Pitch alone</span><span class="l-it" lang="it">Basic Pitch da solo</span><span class="sw sw-mf"></span><span class="l-en">With MotifFlow clean-up</span><span class="l-it" lang="it">Con Pulizia MotifFlow</span></p>
+        <figcaption class="l-en">108 loops. The tuning correction lifts detuned samples by 3.4 points and does not hurt the others. Two more ideas we tried (consensus across loop repeats, key-based clean-up) changed the score by less than half a point, so they stay off.</figcaption>
+        <figcaption class="l-it" lang="it">108 loop. La correzione dell'accordatura alza i sample scordati di 3,4 punti e non peggiora gli altri. Altre due idee che abbiamo provato (consenso tra le ripetizioni del loop, pulizia basata sulla tonalità) hanno cambiato il punteggio di meno di mezzo punto, quindi restano spente.</figcaption>
+      </figure>
+
+      <div class="l-en">
+        <h3>The honest part: the sound matters more than the mix</h3>
+        <p>The biggest surprise of the bench: distortion and reverb cost only 1–4 points. What really decides the result is the <b>instrument</b>.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <h3>La parte onesta: conta più il suono del mix</h3>
+        <p>La sorpresa più grande del banco: distorsione e riverbero costano solo 1–4 punti. Quello che decide davvero il risultato è lo <b>strumento</b>.</p>
+      </div>
+
+      <figure class="chart">
+        <svg class="l-en" viewBox="0 0 640 220" role="img" aria-labelledby="snd-en">
+          <title id="snd-en">Note F1 by sound, with MotifFlow clean-up</title>
+          <g class="axis"><line x1="130" y1="192" x2="620" y2="192"/><text x="130" y="212">0</text><text x="252" y="212">0.25</text><text x="375" y="212">0.50</text><text x="497" y="212">0.75</text></g>
+          <g class="grid"><line x1="252" y1="8" x2="252" y2="192"/><line x1="375" y1="8" x2="375" y2="192"/><line x1="497" y1="8" x2="497" y2="192"/></g>
+          <text class="lbl" x="120" y="29">Pluck</text><rect class="c-good" x="130" y="16" width="402" height="18" rx="4"/><text class="val" x="540" y="30">0.82</text>
+          <text class="lbl" x="120" y="65">Keys</text><rect class="c-good" x="130" y="52" width="315" height="18" rx="4"/><text class="val" x="453" y="66">0.64</text>
+          <text class="lbl" x="120" y="101">Genre kits</text><rect class="c-mid" x="130" y="88" width="247" height="18" rx="4"/><text class="val" x="385" y="102">0.50</text>
+          <text class="lbl" x="120" y="137">Pad</text><rect class="c-bad" x="130" y="124" width="108" height="18" rx="4"/><text class="val" x="246" y="138">0.22</text>
+          <text class="lbl" x="120" y="173">Bell</text><rect class="c-bad" x="130" y="160" width="101" height="18" rx="4"/><text class="val" x="239" y="174">0.21</text>
+        </svg>
+        <svg class="l-it" lang="it" viewBox="0 0 640 220" role="img" aria-labelledby="snd-it">
+          <title id="snd-it">F1 sulle note per tipo di suono, con Pulizia MotifFlow</title>
+          <g class="axis"><line x1="130" y1="192" x2="620" y2="192"/><text x="130" y="212">0</text><text x="252" y="212">0,25</text><text x="375" y="212">0,50</text><text x="497" y="212">0,75</text></g>
+          <g class="grid"><line x1="252" y1="8" x2="252" y2="192"/><line x1="375" y1="8" x2="375" y2="192"/><line x1="497" y1="8" x2="497" y2="192"/></g>
+          <text class="lbl" x="120" y="29">Pluck</text><rect class="c-good" x="130" y="16" width="402" height="18" rx="4"/><text class="val" x="540" y="30">0,82</text>
+          <text class="lbl" x="120" y="65">Keys</text><rect class="c-good" x="130" y="52" width="315" height="18" rx="4"/><text class="val" x="453" y="66">0,64</text>
+          <text class="lbl" x="120" y="101">Kit dei generi</text><rect class="c-mid" x="130" y="88" width="247" height="18" rx="4"/><text class="val" x="385" y="102">0,50</text>
+          <text class="lbl" x="120" y="137">Pad</text><rect class="c-bad" x="130" y="124" width="108" height="18" rx="4"/><text class="val" x="246" y="138">0,22</text>
+          <text class="lbl" x="120" y="173">Bell</text><rect class="c-bad" x="130" y="160" width="101" height="18" rx="4"/><text class="val" x="239" y="174">0,21</text>
+        </svg>
+        <figcaption class="l-en">Sharp attacks (pluck, piano) are transcribed well. Pads fade in slowly, so the network hears the notes late; bells have overtones that are not in tune with the note, so it hears extra notes.</figcaption>
+        <figcaption class="l-it" lang="it">Gli attacchi netti (pluck, piano) si trascrivono bene. I pad entrano lentamente, quindi la rete sente le note in ritardo; le campane hanno armonici non intonati con la nota, quindi la rete sente note in più.</figcaption>
+      </figure>
+
+      <p class="note l-en"><b>What this means for you today:</b> if you start from a pad or a bell loop, expect to clean the Original by hand, or start from the MIDI if you have it. For everything else, the NOTES sliders and the clean-up switch usually get you there.</p>
+      <p class="note l-it" lang="it"><b>Cosa significa per te oggi:</b> se parti da un loop di pad o di campane, mettiti in conto di ripulire l'Originale a mano, oppure parti dal MIDI se ce l'hai. Per tutto il resto, gli slider di REGOLA NOTE e l'interruttore di pulizia di solito bastano.</p>
+    </section>
+
+    <!-- 8 -->
+    <section id="next" class="g-sec">
+      <h2><span class="num">08</span><span class="l-en">What comes next</span><span class="l-it" lang="it">Prossimi passi</span></h2>
+      <div class="l-en">
+        <ul class="ticks">
+          <li><b>A network trained on our sounds.</b> Basic Pitch learned from real instruments, not from trap pads and bells. We will fine-tune it on thousands of loops rendered with hip-hop sounds and effects, where the right notes are known for free, and we will measure it on the same bench before it ships.</li>
+          <li><b>Swing and triplets in audio.</b> Today audio is placed on a straight sixteenth grid; a groove-aware grid will keep swung loops swung.</li>
+          <li><b>808 slides.</b> Using the pitch contour to turn glides into connected notes instead of broken ones.</li>
+          <li><b>A richer My Style.</b> Learning whole phrases (what tends to follow what), chord progressions and voicings, not just positions in the beat.</li>
+        </ul>
+        <p>When these are ready we will publish the new numbers here, next to the old ones.</p>
+      </div>
+      <div class="l-it" lang="it">
+        <ul class="ticks">
+          <li><b>Una rete addestrata sui nostri suoni.</b> Basic Pitch ha imparato da strumenti reali, non da pad e campane trap. La riaddestreremo su migliaia di loop generati con suoni ed effetti hip-hop, dove le note giuste sono note in partenza, e la misureremo sullo stesso banco prima di rilasciarla.</li>
+          <li><b>Swing e terzine nell'audio.</b> Oggi l'audio viene messo su una griglia dritta di sedicesimi; una griglia che riconosce il groove manterrà swingati i loop swingati.</li>
+          <li><b>Slide dell'808.</b> Usare il contorno di intonazione per trasformare i glide in note legate invece che spezzate.</li>
+          <li><b>Un My Style più ricco.</b> Imparare frasi intere (cosa tende a seguire cosa), progressioni di accordi e voicing, non solo le posizioni nel movimento.</li>
+        </ul>
+        <p>Quando saranno pronti pubblicheremo qui i nuovi numeri, accanto a quelli vecchi.</p>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="refs" class="g-sec">
+      <h2><span class="num">09</span><span class="l-en">References</span><span class="l-it" lang="it">Riferimenti</span></h2>
+      <ol class="refs">
+        <li>R. M. Bittner, J. J. Bosch, D. Rubinstein, G. Meseguer-Brocal, S. Ewert. <i>A Lightweight Instrument-Agnostic Model for Polyphonic Note Transcription and Multipitch Estimation.</i> ICASSP 2022. <a href="https://arxiv.org/abs/2203.09893" rel="noopener">arXiv:2203.09893</a> · <a href="https://github.com/spotify/basic-pitch" rel="noopener">github.com/spotify/basic-pitch</a> (Apache-2.0)</li>
+        <li>D. FitzGerald. <i>Harmonic/Percussive Separation Using Median Filtering.</i> DAFx 2010.</li>
+        <li>C. L. Krumhansl, E. J. Kessler. <i>Tracing the Dynamic Changes in Perceived Tonal Organization in a Spatial Representation of Musical Keys.</i> Psychological Review 89(4), 1982.</li>
+        <li>C. Raffel et al. <i>mir_eval: A Transparent Implementation of Common MIR Metrics.</i> ISMIR 2014. <span class="l-en">(Our F1 follows its note-onset convention: exact pitch, 50 ms tolerance.)</span><span class="l-it" lang="it">(Il nostro F1 segue la sua convenzione sugli attacchi: altezza esatta, tolleranza 50 ms.)</span></li>
+      </ol>
+      <p class="note l-en">Want to know how to use all this in practice? Read the <a href="guide.html">user guide</a>.</p>
+      <p class="note l-it" lang="it">Vuoi sapere come usare tutto questo in pratica? Leggi la <a href="guide.html">guida all'uso</a>.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="assets/motifflow_icon_256.png" alt="" width="28" height="28">
+      <span>© <span id="year">2026</span> Paolo Lagalante · MotifFlow. <span class="l-en">All rights reserved.</span><span class="l-it" lang="it">Tutti i diritti riservati.</span></span>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="guide.html"><span class="l-en">User guide</span><span class="l-it" lang="it">Guida all'uso</span></a>
+      <a href="how-it-works.html" aria-current="page"><span class="l-en">Technology</span><span class="l-it" lang="it">Tecnologia</span></a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html"><span class="l-en">Terms</span><span class="l-it" lang="it">Termini</span></a>
+      <a href="terms.html#refunds"><span class="l-en">Refunds</span><span class="l-it" lang="it">Rimborsi</span></a>
+      <a href="legal.html"><span class="l-en">Legal notice</span><span class="l-it" lang="it">Note legali</span></a>
+    </nav>
+    <p class="credits"><span class="l-en">Audio-to-MIDI uses Basic Pitch (Apache-2.0). Built with JUCE. Fonts: Space Grotesk, JetBrains Mono, Inter (SIL OFL). 3D: three.js (MIT). VST is a trademark of Steinberg Media Technologies GmbH.</span><span class="l-it" lang="it">L'audio-to-MIDI usa Basic Pitch (Apache-2.0). Realizzato con JUCE. Font: Space Grotesk, JetBrains Mono, Inter (SIL OFL). 3D: three.js (MIT). VST è un marchio di Steinberg Media Technologies GmbH.</span></p>
+  </div>
+</footer>
+
+<script src="guide.js"></script>
+</body>
+</html>
