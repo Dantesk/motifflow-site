@@ -90,6 +90,54 @@ if (/^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/i.test(CONFIG.supportEmail)) {
   document.getElementById('support').hidden = false;
 }
 
+/* ---------- slow scroll for in-page links ----------
+   The 3D scene tells the story as you scroll: a jump of the browser's own smooth scroll is over in
+   a fraction of a second and the animation is lost. In-page links glide instead, at a pace that lets
+   every act play (longer for longer distances). Any wheel, touch or key press stops the glide. */
+let glide = null;
+function stopGlide() {
+  if (!glide) return;
+  cancelAnimationFrame(glide.raf);
+  glide = null;
+  document.documentElement.style.scrollBehavior = '';
+}
+function glideTo(targetY, onDone) {
+  stopGlide();
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 2) { if (onDone) onDone(); return; }
+  // about 500 px per second, never shorter than 1.4 s or longer than 8 s
+  const duration = Math.min(8000, Math.max(1400, Math.abs(distance) / 0.5));
+  const ease = (t) => 0.5 - 0.5 * Math.cos(Math.PI * t);   // ease in-out sine: gentle start and end, even pace between
+  document.documentElement.style.scrollBehavior = 'auto';   // our own animation, not the CSS one
+  const t0 = performance.now();
+  const step = (now) => {
+    const t = Math.min(1, (now - t0) / duration);
+    window.scrollTo(0, startY + distance * ease(t));
+    if (t < 1) { glide.raf = requestAnimationFrame(step); return; }
+    stopGlide();
+    if (onDone) onDone();
+  };
+  glide = { raf: requestAnimationFrame(step) };
+}
+['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((ev) => window.addEventListener(ev, stopGlide, { passive: true }));
+
+document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const target = id ? document.getElementById(id) : null;
+    if (!target || reducedMotion) return;   // no target, or reduced motion: the browser's normal jump
+    e.preventDefault();
+    const navH = nav ? nav.getBoundingClientRect().height + 16 : 0;
+    const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - (id === 'top' ? 0 : navH));
+    glideTo(y, () => {
+      history.replaceState(null, '', '#' + id);
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });   // keyboard and screen-reader users land in the section
+    });
+  });
+});
+
 /* ---------- nav state ---------- */
 const nav = document.getElementById('nav');
 

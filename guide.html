@@ -45,7 +45,7 @@
       <li><a href="#variations"><span class="l-en">Shape the variations</span><span class="l-it" lang="it">Modellare le variazioni</span></a></li>
       <li><a href="#keep"><span class="l-en">Keep what you like</span><span class="l-it" lang="it">Tenere ciò che ti piace</span></a></li>
       <li><a href="#looptools"><span class="l-en">Extend, transpose, vary a part</span><span class="l-it" lang="it">Estendere, trasporre, variare una parte</span></a></li>
-      <li><a href="#chords"><span class="l-en">Chords and presets</span><span class="l-it" lang="it">Accordi e preset</span></a></li>
+      <li><a href="#chords"><span class="l-en">Chords, sounds and presets</span><span class="l-it" lang="it">Accordi, suoni e preset</span></a></li>
       <li><a href="#daw"><span class="l-en">Into your DAW</span><span class="l-it" lang="it">Nella tua DAW</span></a></li>
       <li><a href="#sounds"><span class="l-en">Play with your own sounds</span><span class="l-it" lang="it">Suonare con i tuoi suoni</span></a></li>
       <li><a href="#style"><span class="l-en">Learn my style</span><span class="l-it" lang="it">Impara il mio stile</span></a></li>
@@ -148,6 +148,8 @@
           </table>
         </div>
         <p><b>RESET</b> goes back to the defaults, <b>DONE</b> closes the panel, <b>ADJUST NOTES</b> opens it again. Your settings are kept for the next sample.</p>
+        <h3>MotifFlow clean-up</h3>
+        <p><b>MotifFlow clean-up</b> (on by default, in the same panel) works on top of the network: a sample tuned a few cents off (pitch-shifted, vinyl, varispeed) is measured and corrected before listening, so the notes do not flip between two keys. Turn it off to hear what Basic Pitch finds on its own and compare the two results on your sample.</p>
         <h3>Finish by hand</h3>
         <p>Open the Original with <b>EDIT</b>: double-click to add or delete a note, drag to move it, use the arrows to transpose. Two minutes of cleaning on the Original give much better variations, because every lane is built from it.</p>
       </div>
@@ -179,6 +181,8 @@
           </table>
         </div>
         <p><b>RESET</b> torna ai valori predefiniti, <b>FATTO</b> chiude il pannello, <b>REGOLA NOTE</b> lo riapre. Le impostazioni restano per il campione successivo.</p>
+        <h3>Pulizia MotifFlow</h3>
+        <p>La <b>Pulizia MotifFlow</b> (attiva di serie, nello stesso pannello) lavora in aggiunta alla rete: un sample calante o crescente di qualche cent (pitch-shift, vinile, varispeed) viene misurato e corretto prima dell'ascolto, così le note non oscillano tra due tonalità. Spegnila per sentire cosa trova Basic Pitch da solo e confrontare i due risultati sul tuo sample.</p>
         <h3>Rifinisci a mano</h3>
         <p>Apri l'Originale con <b>MODIFICA</b>: doppio clic per aggiungere o eliminare una nota, trascina per spostarla, frecce per trasporla. Due minuti di pulizia sull'Originale danno variazioni molto migliori, perché ogni corsia nasce da lì.</p>
       </div>
@@ -275,7 +279,7 @@
 
     <!-- 7 -->
     <section id="chords" class="g-sec">
-      <h2><span class="num">07</span><span class="l-en">Chords and presets</span><span class="l-it" lang="it">Accordi e preset</span></h2>
+      <h2><span class="num">07</span><span class="l-en">Chords, sounds and presets</span><span class="l-it" lang="it">Accordi, suoni e preset</span></h2>
       <div class="l-en">
         <p>The chord names of every lane are shown above the notes. Under <b>Chords of the variations</b> (left panel) you change how the variations play their chords, without touching the Original:</p>
         <ul class="ticks">
@@ -284,6 +288,20 @@
           <li><b>Arpeggio:</b> up, down, up-down or random at 1/8, 1/16, 1/16 triplets or 1/32.</li>
         </ul>
         <p>All of this goes into the MIDI you drag and export. <b>Presets</b> set genre, knobs, preview sound and chord style in one click; once you move a knob the menu shows <i>(modified)</i>.</p>
+        <h3>Preview sounds and genre kits</h3>
+        <p>The built-in synth is only a preview (the final sound comes from your instruments), but it helps to hear the idea in the right colour. <b>Preview sound → Kit</b> gives each voice its own instrument and follows the genre:</p>
+        <div class="table-wrap">
+          <table class="g-table">
+            <thead><tr><th>Genre</th><th>Melody</th><th>Chords</th><th>Bass</th></tr></thead>
+            <tbody>
+              <tr><td>Trap</td><td>flute</td><td>dark piano</td><td>808</td></tr>
+              <tr><td>Drill</td><td>dark piano</td><td>strings</td><td>hard 808</td></tr>
+              <tr><td>Boom Bap</td><td>vibraphone</td><td>dusty Rhodes</td><td>round plucked bass</td></tr>
+              <tr><td>R&amp;B</td><td>soft lead</td><td>Rhodes with chorus</td><td>warm analog bass</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>My Style uses the kit of the genre closest to your loops. Keys, Pluck, Pad, Bell and 808 play everything with one sound. The WAV you drag or export uses the same sound.</p>
       </div>
       <div class="l-it" lang="it">
         <p>I nomi degli accordi di ogni corsia compaiono sopra le note. In <b>Accordi delle variazioni</b> (pannello sinistro) cambi come le variazioni suonano gli accordi, senza toccare l'Originale:</p>
@@ -293,6 +311,20 @@
           <li><b>Arpeggio:</b> su, giù, su-giù o casuale a 1/8, 1/16, terzine di 1/16 o 1/32.</li>
         </ul>
         <p>Tutto questo finisce nel MIDI che trascini ed esporti. I <b>Preset</b> impostano genere, manopole, suono di anteprima e stile degli accordi in un clic; appena muovi una manopola il menu mostra <i>(modificato)</i>.</p>
+        <h3>Suoni di anteprima e kit per genere</h3>
+        <p>Il synth interno è solo un'anteprima (il suono finale viene dai tuoi strumenti), ma aiuta a sentire l'idea con il colore giusto. <b>Suono di anteprima → Kit</b> dà a ogni voce il suo strumento e segue il genere:</p>
+        <div class="table-wrap">
+          <table class="g-table">
+            <thead><tr><th>Genere</th><th>Melodia</th><th>Accordi</th><th>Basso</th></tr></thead>
+            <tbody>
+              <tr><td>Trap</td><td>flauto</td><td>piano scuro</td><td>808</td></tr>
+              <tr><td>Drill</td><td>piano scuro</td><td>archi</td><td>808 duro</td></tr>
+              <tr><td>Boom Bap</td><td>vibrafono</td><td>Rhodes polveroso</td><td>basso pizzicato tondo</td></tr>
+              <tr><td>R&amp;B</td><td>lead morbido</td><td>Rhodes con chorus</td><td>basso analogico caldo</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>My Style usa il kit del genere più vicino ai tuoi loop. Keys, Pluck, Pad, Bell e 808 suonano tutto con un solo suono. Il WAV che trascini o esporti usa lo stesso suono.</p>
       </div>
     </section>
 
@@ -307,6 +339,7 @@
           <li><b>WAV</b>: the lane played with the preview sound, 48 kHz / 24-bit, a seamless loop. While WAV is chosen the lanes are rendered in the background, so the drop is instant.</li>
           <li>Hold <kbd>Alt/Option</kbd> while dragging to get the other format just once.</li>
         </ul>
+        <p>Each drag is <b>one file</b>: MIDI with one track (melody, chords and bass together), or with <b>Export voices as tracks</b> on a multitrack MIDI (one track per voice, most DAWs create a track for each); WAV is one stereo mix. For separate audio files per voice use <b>EXPORT ▾ → Separate voices</b>.</p>
         <h3>Export</h3>
         <p><b>EXPORT ▾</b> saves the selected lane as MIDI, WAV or separate voices (melody, chords and bass as .mid and .wav each, ready for sample packs), or every lane into a folder. File names carry genre, style, key and tempo. Exports run in the background; the status line tells you when they are done.</p>
       </div>
@@ -318,6 +351,7 @@
           <li><b>WAV</b>: la corsia suonata con il suono di anteprima, 48 kHz / 24 bit, in loop senza stacchi. Finché è scelto WAV le corsie vengono renderizzate in background, così il rilascio è immediato.</li>
           <li>Tieni premuto <kbd>Alt/Option</kbd> durante il trascinamento per avere l'altro formato una volta sola.</li>
         </ul>
+        <p>Ogni trascinamento è <b>un solo file</b>: MIDI con una traccia (melodia, accordi e basso insieme) oppure, con <b>Esporta le voci su tracce</b> acceso, un MIDI multitraccia (una traccia per voce, la maggior parte delle DAW crea una traccia per ognuna); il WAV è un unico mix stereo. Per file audio separati per voce usa <b>ESPORTA ▾ → Voci separate</b>.</p>
         <h3>Esportare</h3>
         <p><b>ESPORTA ▾</b> salva la corsia selezionata come MIDI, WAV o voci separate (melodia, accordi e basso in .mid e .wav ciascuno, pronti per i sample pack), oppure tutte le corsie in una cartella. I nomi dei file contengono genere, stile, tonalità e tempo. Gli export girano in background; la riga di stato ti dice quando hanno finito.</p>
       </div>
