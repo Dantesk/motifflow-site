@@ -26,7 +26,9 @@
 <h2>Purchases</h2>
 <p>Payments are handled by Stripe. When you buy, Stripe receives your payment details; we receive your name, email address, country and order details to deliver and support your licence. We never see your full card details.</p>
 <h2>Licence activation</h2>
-<p>[Describe what the plugin sends during activation, e.g. licence key and a machine identifier, and how long it is kept.]</p>
+<p>When you activate a licence or start the trial, the plugin sends our licence server: the licence key (none for the trial), a computer code, the plugin version, the operating system name and the computer's name (shortened, so you can recognise your computers when you move the licence). The computer code is a one-way hash of the hardware ID: we never receive the ID itself and cannot reverse it. We keep these data for as long as the licence exists, to limit how many computers use it and to help you move it. After activation the plugin checks the licence offline: nothing is sent at each start.</p>
+<h2>Update check</h2>
+<p>Once a day at most, the plugin downloads a small public file from this website (version.json) to tell you when a new version is out. Nothing is sent with the request apart from what every web request carries (your IP address, seen by GitHub Pages). You can switch it off in the plugin: <b>?</b> → <i>Check for updates once a day</i>.</p>
 <h2>The plugin and your music</h2>
 <p>Audio and MIDI you load into MotifFlow, including audio-to-MIDI, are processed locally on your computer and are not uploaded anywhere. The plugin keeps a small log file on your computer for troubleshooting; it is sent to us only if you choose to attach it to a support request.</p>
 <h2>Your rights</h2>
