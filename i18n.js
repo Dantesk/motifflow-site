@@ -13,12 +13,12 @@ window.MF_I18N = {
     "nav.faq": "FAQ",
     "nav.guide": "Guida",
     "nav.tech": "Tecnologia",
-    "nav.buy": "Acquista a 59 €",
+    "nav.buy": "Acquista a 29 €",
 
     "hero.t1": "Un loop.",
     "hero.t2": "Quattro futuri.",
     "hero.sub": "Carica un loop MIDI o audio e MotifFlow ne scrive quattro nuove versioni — melodia, accordi e basso — pensate per Trap, Drill, Boom Bap e R&amp;B. Trascina quella che ti piace direttamente nella tua DAW.",
-    "cta.buy": "Acquista a 59 €",
+    "cta.buy": "Acquista a 29 €",
     "cta.trial": "Provalo gratis per 14 giorni",
 
     "how.title": "Dal loop a nuove idee in tre mosse",
@@ -114,7 +114,8 @@ window.MF_I18N = {
 
     "price.title": "Paghi una volta. È tuo.",
     "price.lede": "Nessun abbonamento. Tutto ciò che crei con MotifFlow puoi pubblicarlo.",
-    "price.kind": "Prezzo di lancio",
+    "price.kind": "Offerta di lancio",
+    "price.then": "prezzo di lancio, poi 59 €",
     "price.l1": "Acquisto una tantum",
     "price.l2": "Aggiornamenti gratuiti per tutte le versioni 1.x",
     "price.l3": "Usalo su 2 computer",

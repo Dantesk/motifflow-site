@@ -279,6 +279,7 @@ main, .footer { position: relative; z-index: 2; }
 .price-head p { font-size: 14px; }
 .price { margin: 22px 0 6px; display: flex; align-items: baseline; gap: 14px; }
 .price s { color: var(--muted); font-size: 24px; text-decoration-thickness: 2px; }
+.price-then { color: var(--muted); font-size: 17px; letter-spacing: 0; }
 .price strong { font-size: 72px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; }
 .price-card .ticks { margin: 18px 0 26px; }
 .trial { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); scroll-margin-top: 120px; }
